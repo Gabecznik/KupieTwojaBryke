@@ -1,0 +1,23 @@
+Main list
+id
+Marka
+Model
+zdjęcie
+nr rejestracyjny
+nr VIN
+przebieg (liczba)
+cena (liczba)
+ubezpieczenie ważne do (data)
+przegląd ważny do (data)
+data pierszej rejestracji (data)
+rodzaj pojadu (wybór z listy)
+rok produkcji (liczba)
+pojemność silnika
+moc silnika
+rodzaj paliwa (wybór z listy)
+liczba miejsc
+rodzaj nadwozia
+skrzynia biegów
+liczba drzwi
+Uwagi
+data kupienia
