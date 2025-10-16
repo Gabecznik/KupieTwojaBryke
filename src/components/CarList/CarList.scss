@@ -1,0 +1,105 @@
+.car-list {
+    &__content {
+        width: 100vw;
+        display: flex;
+        align-items: flex-start;
+    }
+
+    &__filter {
+        border: 1px solid grey;
+        border-radius: 5px;
+
+        margin: 1em 0 1em 1em;
+        padding: 15px;
+        box-sizing: border-box;
+        min-width: 20rem;
+
+        position: sticky;
+        top: 1rem;
+        align-self: flex-start;
+        height: fit-content;
+    }
+
+    &__filter-title {
+        margin: 0 0 0.67em 0;
+    }
+
+    &__text-input {
+        all: unset;
+
+        border: 1px solid grey;
+        border-radius: 5px;
+        padding: 8px;
+        box-sizing: border-box;
+
+        width: 100%;
+    }
+
+    &__list {
+        display: flex;
+        flex-direction: column;
+        gap: 0.5em;
+        width: 100%;
+
+        padding: 0 40px;
+
+        max-height: calc(100vh - 2rem);
+        overflow-y: auto;
+    }
+
+    &__element {
+        display: flex;
+        flex-direction: row;
+        gap: 25px;
+
+        border: 1px solid grey;
+        border-radius: 5px;
+
+        padding: 0.6em;
+    }
+
+    &__car-image {
+        height: 7rem;
+    }
+
+    &__car-info {
+        display: flex;
+        flex-direction: column;
+        justify-content: space-between;
+
+        width: 100%;
+    }
+
+    &__initial-info {
+        display: flex;
+        justify-content: space-between;
+    }
+
+    &__title {
+        font-weight: 700;
+    }
+
+    &__secondary-info {
+        font-size: 0.7rem;
+        color: grey
+    }
+
+    &__additional-info {
+        display: flex;
+        gap: 10px;
+        font-size: 0.9rem;
+        text-align: center;
+
+        >div {
+            display: flex;
+            align-items: center;
+            gap: 4px;
+        }
+    }
+
+    &__info-emoji {
+        width: 15px;
+        height: 15px;
+        display: block;
+    }
+}
