@@ -2,6 +2,7 @@ import { CarList } from './components/CarList/CarList'
 import './App.css'
 import cars from '../public/api/cars.json'
 import { useState } from 'react'
+import CarForm from './components/CarForm/CarForm'
 
 function App() {
   const [searchValue, setSearchValue] = useState<string>('')
@@ -12,9 +13,11 @@ function App() {
   )
 
   return (
-
-    <CarList cars={filteredCars} searchValue={searchValue} setSearchValue={setSearchValue} />
-
+    <>
+      <CarList cars={filteredCars} searchValue={searchValue} setSearchValue={setSearchValue} />
+      <h2>Dodaj samochód</h2>
+      <CarForm />
+    </>
   )
 }
 
