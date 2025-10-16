@@ -3,6 +3,7 @@ import './App.css'
 import cars from '../public/api/cars.json'
 import { useState } from 'react'
 import { CarForm } from './components/CarForm/CarForm'
+import { BrowserRouter, Routes, Route, Link } from "react-router-dom";
 
 function App() {
   const [searchValue, setSearchValue] = useState<string>('')
@@ -13,11 +14,28 @@ function App() {
   )
 
   return (
-    <>
-      <CarList cars={filteredCars} searchValue={searchValue} setSearchValue={setSearchValue} />
-      <h2>Dodaj samochód</h2>
-      <CarForm />
-    </>
+    <BrowserRouter>
+      <nav className="nav">
+        <Link to="/list">Lista samochodów</Link>
+        <Link to="/form">Dodaj samochód</Link>
+      </nav>
+
+    <Routes>
+      <Route
+        path='/list'
+        element={
+          <CarList 
+          cars={filteredCars} 
+          searchValue={searchValue} 
+          setSearchValue={setSearchValue} 
+          />
+        }
+      />
+      <Route 
+        path='/form'
+        element = {<CarForm/>}/>
+    </Routes>
+    </BrowserRouter>
   )
 }
 

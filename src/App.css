@@ -1,2 +1,17 @@
 
 
+.nav {
+  display: flex;
+  gap: 20px;
+  margin: 20px;
+}
+
+.nav a {
+  text-decoration: none;
+  color: #0077ff;
+  font-weight: 600;
+}
+
+.nav a:hover {
+  text-decoration: underline;
+}
