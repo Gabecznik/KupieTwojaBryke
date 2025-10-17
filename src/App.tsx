@@ -9,12 +9,26 @@ import cars from "../public/api/cars.json";
 
 function App() {
   const [searchValue, setSearchValue] = useState<string>("");
+  const [filterField, setFilterField] = useState<string>("model")
 
-  const filteredCars = [...cars].filter(
-    (c) =>
-      c.brand.toLowerCase().includes(searchValue.toLowerCase().trim()) ||
-      c.model.toLowerCase().includes(searchValue.toLowerCase().trim())
-  );
+  const filteredCars = cars.filter(
+    (c) => {
+      const val = searchValue.toLocaleLowerCase().trim();
+
+      if (!val) return true;
+
+      switch (filterField) {
+        case "brand":
+          return c.brand.toLowerCase().includes(val);
+        case "fuelType":
+          return c.fuelType.toLowerCase().includes(val);
+        case "yearOfProduction":
+          return c.yearOfProduction.toString().includes(val);
+        default:
+          return c.model.toLowerCase().includes(val);
+      }
+    }
+   );
 
   return (
     <BrowserRouter>
@@ -32,6 +46,8 @@ function App() {
                 cars={filteredCars}
                 searchValue={searchValue}
                 setSearchValue={setSearchValue}
+                filterField={filterField}
+                setFilterField={setFilterField}
               />
             }
           />

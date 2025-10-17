@@ -5,14 +5,41 @@ type Props = {
   cars: Car[];
   searchValue: string;
   setSearchValue: (value: string) => void;
+  filterField: string;
+  setFilterField: (value: string) => void;
 };
 
-export const CarList: React.FC<Props> = ({ cars, searchValue, setSearchValue }) => {
+export const CarList: React.FC<Props> = ({ 
+  cars, 
+  searchValue, 
+  setSearchValue,
+  filterField,
+  setFilterField
+  }) => {
+
   return (
     <div className="flex flex-col md:flex-row gap-6 w-full">
       {/* 🔹 Panel filtrów */}
       <aside className="bg-surface border border-gray-200 rounded-xl p-6 shadow-xl md:w-80 sticky top-4 h-fit">
         <h2 className="text-lg font-semibold text-textMain mb-4">Filtry</h2>
+
+        <label className="block text-sm text-textMuted mb-1">Filtruj po:</label>
+        <select
+          value={filterField}
+          onChange={(e) => setFilterField(e.target.value)}
+          className="w-full mb-3 bg-background border border-gray-600 text-textMain rounded-md px-3 py-2 text-sm focus:ring-2 focus:ring-primary"
+        >
+          <option value="model">Model</option>
+          <option value="brand">Marka</option>
+          <option value="fuelType">Rodzaj paliwa</option>
+          <option value="yearOfProduction">Rok produkcji</option>
+        </select>
+
+        <label className="block text-sm text-textMuted mb-1">
+          {/* Wpisz wartość: */}
+        </label>
+
+
         <input
           type="text"
           placeholder="Wpisz model lub markę..."
@@ -22,21 +49,21 @@ export const CarList: React.FC<Props> = ({ cars, searchValue, setSearchValue }) 
         />
       </aside>
 
-      {/* 🔹 Lista samochodów */}
+      {/* Lista samochodów */}
       <ul className="flex-1 flex flex-col gap-4 overflow-y-auto pr-2 md:pr-4">
         {cars.map((c) => (
           <div
             key={c.id}
             className="flex flex-col sm:flex-row gap-6 bg-surface p-4 rounded-xl border border-gray-700 shadow-xl hover:shadow-xl transition-all duration-300"
           >
-            {/* 🔸 Zdjęcie */}
+            {/* Zdjęcie */}
             <img
               className="w-full sm:w-32 h-40 sm:h-24 object-cover rounded-md"
               src="/images/car-angled-front-left-svgrepo-com.svg"
               alt={`${c.brand} ${c.model}`}
             />
 
-            {/* 🔸 Informacje */}
+            {/* Informacje */}
             <div className="flex flex-col justify-between flex-1">
               {/* Główne info */}
               <div className="flex justify-between flex-wrap gap-2">
