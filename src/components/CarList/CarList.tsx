@@ -11,8 +11,8 @@ export const CarList: React.FC<Props> = ({ cars, searchValue, setSearchValue }) 
   return (
     <div className="flex flex-col md:flex-row gap-6 w-full">
       {/* 🔹 Panel filtrów */}
-      <aside className="bg-white border border-gray-200 rounded-xl p-6 shadow-sm md:w-80 sticky top-4 h-fit">
-        <h2 className="text-lg font-semibold text-gray-700 mb-4">Filtry</h2>
+      <aside className="bg-surface border border-gray-200 rounded-xl p-6 shadow-xl md:w-80 sticky top-4 h-fit">
+        <h2 className="text-lg font-semibold text-textMain mb-4">Filtry</h2>
         <input
           type="text"
           placeholder="Wpisz model lub markę..."
@@ -27,7 +27,7 @@ export const CarList: React.FC<Props> = ({ cars, searchValue, setSearchValue }) 
         {cars.map((c) => (
           <div
             key={c.id}
-            className="flex flex-col sm:flex-row gap-6 bg-white p-4 rounded-xl border border-gray-200 shadow-sm hover:shadow-md transition"
+            className="flex flex-col sm:flex-row gap-6 bg-surface p-4 rounded-xl border border-gray-700 shadow-xl hover:shadow-xl transition-all duration-300"
           >
             {/* 🔸 Zdjęcie */}
             <img
@@ -42,17 +42,17 @@ export const CarList: React.FC<Props> = ({ cars, searchValue, setSearchValue }) 
               <div className="flex justify-between flex-wrap gap-2">
                 <div className="text-lg font-semibold">
                   <div>{`${c.brand} ${c.model}`}</div>
-                  <div className="text-blue-600 font-medium text-sm">
+                  <div className="text-lg font-medium text-sm">
                     {`${c.engineCapacity} • ${c.enginePower}`}
                   </div>
                 </div>
-                <div className="text-blue-600 font-bold text-lg">
+                <div className="text-textMuted font-bold text-lg">
                   {`${c.price} PLN`}
                 </div>
               </div>
 
               {/* Dodatkowe informacje */}
-              <div className="flex flex-wrap gap-4 mt-3 text-sm text-gray-600">
+              <div className="flex flex-wrap gap-4 mt-3 text-sm text-textPlain">
                 <div className="flex items-center gap-2">
                   <img
                     className="w-4 h-4 opacity-70"

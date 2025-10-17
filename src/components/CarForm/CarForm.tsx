@@ -55,7 +55,7 @@ export function CarForm() {
             <input
               type="number"
               {...register("id", { required: true })}
-              className="w-full px-3 py-2 rounded-md bg-background border border-gray-600 focus:border-primary focus:ring-2 focus:ring-primary focus:outline-none"
+              className="w-full px-3 py-2 rounded-md bg-white border border-gray-600 focus:border-primary focus:ring-2 focus:ring-primary focus:outline-none"
             />
             {errors.id && (
               <p className="text-accent text-sm mt-1">Nr ID jest wymagany</p>
@@ -67,7 +67,7 @@ export function CarForm() {
             <label className="block mb-1 text-sm text-textMuted">Model</label>
             <input
               {...register("model", { required: true, minLength: 2 })}
-              className="w-full px-3 py-2 rounded-md bg-background border border-gray-600 focus:border-primary focus:ring-2 focus:ring-primary focus:outline-none"
+              className="w-full px-3 py-2 rounded-md bg-white border border-gray-600 focus:border-primary focus:ring-2 focus:ring-primary focus:outline-none"
             />
             {errors.model && (
               <p className="text-accent text-sm mt-1">
@@ -81,7 +81,7 @@ export function CarForm() {
             <label className="block mb-1 text-sm text-textMuted">Marka</label>
             <input
               {...register("brand", { required: true })}
-              className="w-full px-3 py-2 rounded-md bg-background border border-gray-600 focus:border-primary focus:ring-2 focus:ring-primary focus:outline-none"
+              className="w-full px-3 py-2 rounded-md bg-white border border-gray-600 focus:border-primary focus:ring-2 focus:ring-primary focus:outline-none"
             />
             {errors.brand && (
               <p className="text-accent text-sm mt-1">
@@ -95,7 +95,7 @@ export function CarForm() {
             <label className="block mb-1 text-sm text-textMuted">Numer VIN</label>
             <input
               {...register("vin")}
-              className="w-full px-3 py-2 rounded-md bg-background border border-gray-600 focus:border-primary focus:ring-2 focus:ring-primary focus:outline-none"
+              className="w-full px-3 py-2 rounded-md bg-white border border-gray-600 focus:border-primary focus:ring-2 focus:ring-primary focus:outline-none"
             />
           </div>
 
@@ -105,7 +105,7 @@ export function CarForm() {
             <input
               type="number"
               {...register("price")}
-              className="w-full px-3 py-2 rounded-md bg-background border border-gray-600 focus:border-primary focus:ring-2 focus:ring-primary focus:outline-none"
+              className="w-full px-3 py-2 rounded-md bg-white border border-gray-600 focus:border-primary focus:ring-2 focus:ring-primary focus:outline-none"
             />
           </div>
 
@@ -115,7 +115,7 @@ export function CarForm() {
             <input
               type="number"
               {...register("mileage")}
-              className="w-full px-3 py-2 rounded-md bg-background border border-gray-600 focus:border-primary focus:ring-2 focus:ring-primary focus:outline-none"
+              className="w-full px-3 py-2 rounded-md bg-white border border-gray-600 focus:border-primary focus:ring-2 focus:ring-primary focus:outline-none"
             />
           </div>
 
@@ -124,7 +124,7 @@ export function CarForm() {
             <label className="block mb-1 text-sm text-textMuted">Rodzaj paliwa</label>
             <input
               {...register("fuelType")}
-              className="w-full px-3 py-2 rounded-md bg-background border border-gray-600 focus:border-primary focus:ring-2 focus:ring-primary focus:outline-none"
+              className="w-full px-3 py-2 rounded-md bg-white border border-gray-600 focus:border-primary focus:ring-2 focus:ring-primary focus:outline-none"
             />
           </div>
 
@@ -133,7 +133,7 @@ export function CarForm() {
             <label className="block mb-1 text-sm text-textMuted">Skrzynia biegów</label>
             <input
               {...register("transmission")}
-              className="w-full px-3 py-2 rounded-md bg-background border border-gray-600 focus:border-primary focus:ring-2 focus:ring-primary focus:outline-none"
+              className="w-full px-3 py-2 rounded-md bg-white border border-gray-600 focus:border-primary focus:ring-2 focus:ring-primary focus:outline-none"
             />
           </div>
 
@@ -143,7 +143,7 @@ export function CarForm() {
             <input
               type="number"
               {...register("yearOfProduction")}
-              className="w-full px-3 py-2 rounded-md bg-background border border-gray-600 focus:border-primary focus:ring-2 focus:ring-primary focus:outline-none"
+              className="w-full px-3 py-2 rounded-md bg-white border border-gray-600 focus:border-primary focus:ring-2 focus:ring-primary focus:outline-none"
             />
           </div>
 
@@ -153,7 +153,7 @@ export function CarForm() {
             <input
               type="date"
               {...register("purchaseDate")}
-              className="w-full px-3 py-2 rounded-md bg-background border border-gray-600 focus:border-primary focus:ring-2 focus:ring-primary focus:outline-none"
+              className="w-full px-3 py-2 rounded-md bg-white border border-gray-600 focus:border-primary focus:ring-2 focus:ring-primary focus:outline-none"
             />
           </div>
         </div>
