@@ -1,14 +1,11 @@
 import React from "react";
 import { useForm } from "react-hook-form";
-import type { Car } from "../../types/Car"
-
-import "./CarForm.css";
+import type { Car } from "../../types/Car";
 
 export function CarForm() {
   const {
     register,
     handleSubmit,
-    watch,
     formState: { errors },
   } = useForm<Car>({
     defaultValues: {
@@ -37,88 +34,138 @@ export function CarForm() {
     },
   });
 
-  console.log(watch("model"));
+  const onSubmit = (data: Car) => {
+    alert(JSON.stringify(data, null, 2));
+  };
 
   return (
-    <form
-      onSubmit={handleSubmit((data) => {
-        alert(JSON.stringify(data));
-      })}
-    >
-      <h1>Dodaj samochód</h1>
+    <div className="flex justify-center items-center">
+      <form
+        onSubmit={handleSubmit(onSubmit)}
+        className="w-full max-w-2xl bg-surface p-8 rounded-2xl shadow-lg border border-gray-700"
+      >
+        <h1 className="text-2xl font-bold mb-6 text-primary text-center">
+          Dodaj samochód
+        </h1>
 
-      <label>nr Id</label>
-      <input
-        {...register("id", { required: true})} />
-        {errors.model && <p>nr Id jest wymagany</p>}
-      
-      <label>Model</label>
-      <input
-        {...register("model", { required: true, minLength: 3 })} />
-        {errors.model && <p>Model jest wymagany (min. 3 znaki)</p>}
-      
-      <label>Marka</label>
-      <input {...register("brand", { required: true, minLength:3 })} />
-      {errors.brand && <p>brand jest wymagana</p>}
+        <div className="grid grid-cols-1 sm:grid-cols-2 gap-6">
+          {/* Id */}
+          <div>
+            <label className="block mb-1 text-sm text-textMuted">Nr ID</label>
+            <input
+              type="number"
+              {...register("id", { required: true })}
+              className="w-full px-3 py-2 rounded-md bg-background border border-gray-600 focus:border-primary focus:ring-2 focus:ring-primary focus:outline-none"
+            />
+            {errors.id && (
+              <p className="text-accent text-sm mt-1">Nr ID jest wymagany</p>
+            )}
+          </div>
 
-      <label>Dodaj zdjęcie</label>
-      <input type="file" {...register("image")} />
+          {/* Model */}
+          <div>
+            <label className="block mb-1 text-sm text-textMuted">Model</label>
+            <input
+              {...register("model", { required: true, minLength: 2 })}
+              className="w-full px-3 py-2 rounded-md bg-background border border-gray-600 focus:border-primary focus:ring-2 focus:ring-primary focus:outline-none"
+            />
+            {errors.model && (
+              <p className="text-accent text-sm mt-1">
+                Model jest wymagany (min. 2 znaki)
+              </p>
+            )}
+          </div>
 
-      <label>Numer rejestracyjny</label>
-      <input {...register("registrationNumber")} />
+          {/* Marka */}
+          <div>
+            <label className="block mb-1 text-sm text-textMuted">Marka</label>
+            <input
+              {...register("brand", { required: true })}
+              className="w-full px-3 py-2 rounded-md bg-background border border-gray-600 focus:border-primary focus:ring-2 focus:ring-primary focus:outline-none"
+            />
+            {errors.brand && (
+              <p className="text-accent text-sm mt-1">
+                Marka jest wymagana
+              </p>
+            )}
+          </div>
 
-      <label>Numer VIN</label>
-      <input {...register("vin")} />
+          {/* VIN */}
+          <div>
+            <label className="block mb-1 text-sm text-textMuted">Numer VIN</label>
+            <input
+              {...register("vin")}
+              className="w-full px-3 py-2 rounded-md bg-background border border-gray-600 focus:border-primary focus:ring-2 focus:ring-primary focus:outline-none"
+            />
+          </div>
 
-      <label>Przebieg</label>
-      <input type="number" {...register("mileage")} />
+          {/* Cena */}
+          <div>
+            <label className="block mb-1 text-sm text-textMuted">Cena</label>
+            <input
+              type="number"
+              {...register("price")}
+              className="w-full px-3 py-2 rounded-md bg-background border border-gray-600 focus:border-primary focus:ring-2 focus:ring-primary focus:outline-none"
+            />
+          </div>
 
-      <label>Cena</label>
-      <input type="number" {...register("price")} />
+          {/* Przebieg */}
+          <div>
+            <label className="block mb-1 text-sm text-textMuted">Przebieg (km)</label>
+            <input
+              type="number"
+              {...register("mileage")}
+              className="w-full px-3 py-2 rounded-md bg-background border border-gray-600 focus:border-primary focus:ring-2 focus:ring-primary focus:outline-none"
+            />
+          </div>
 
-      <label>Data wygaśnięcia ubezpieczenia</label>
-      <input type="date" {...register("insuranceValidUntil")} />
+          {/* Rodzaj paliwa */}
+          <div>
+            <label className="block mb-1 text-sm text-textMuted">Rodzaj paliwa</label>
+            <input
+              {...register("fuelType")}
+              className="w-full px-3 py-2 rounded-md bg-background border border-gray-600 focus:border-primary focus:ring-2 focus:ring-primary focus:outline-none"
+            />
+          </div>
 
-      <label>Data wygaśnięcia przeglądu</label>
-      <input type="date" {...register("inspectionValidUntil")} />
+          {/* Skrzynia biegów */}
+          <div>
+            <label className="block mb-1 text-sm text-textMuted">Skrzynia biegów</label>
+            <input
+              {...register("transmission")}
+              className="w-full px-3 py-2 rounded-md bg-background border border-gray-600 focus:border-primary focus:ring-2 focus:ring-primary focus:outline-none"
+            />
+          </div>
 
-      <label>Data pierwszej rejestracji</label>
-      <input type="date" {...register("firstRegistrationDate")} />
+          {/* Rok produkcji */}
+          <div>
+            <label className="block mb-1 text-sm text-textMuted">Rok produkcji</label>
+            <input
+              type="number"
+              {...register("yearOfProduction")}
+              className="w-full px-3 py-2 rounded-md bg-background border border-gray-600 focus:border-primary focus:ring-2 focus:ring-primary focus:outline-none"
+            />
+          </div>
 
-      <label>Rodzaj pojazdu</label>
-      <input  {...register("vehicleType")} />
+          {/* Data zakupu */}
+          <div>
+            <label className="block mb-1 text-sm text-textMuted">Data zakupu</label>
+            <input
+              type="date"
+              {...register("purchaseDate")}
+              className="w-full px-3 py-2 rounded-md bg-background border border-gray-600 focus:border-primary focus:ring-2 focus:ring-primary focus:outline-none"
+            />
+          </div>
+        </div>
 
-      <label>Rok produkcji</label>
-      <input type="date" {...register("yearOfProduction")} />
-
-      <label>Pojemność silnika</label>
-      <input {...register("engineCapacity")} />
-
-      <label>Moc silnika</label>
-      <input {...register("enginePower")} />
-
-      <label>Rodzaj paliwa</label>
-      <input {...register("fuelType")} />
-
-      <label>Liczba miejsc</label>
-      <input type="number" {...register("numberOfSeats")} />
-
-      <label>Rodzaj nadwozia</label>
-      <input {...register("bodyType")} />
-
-      <label>Skrzynia biegów</label>
-      <input {...register("transmission")} />
-
-      <label>Liczba drzwi</label>
-      <input type="number" {...register("numberOfDoors")} />
-
-      <label>Uwagi</label>
-      <input {...register("notes")} />
-
-      <label>Data zakupu</label>
-      <input type="date" {...register("purchaseDate")} />
-
-      <input type="submit" />
-    </form>
+        {/* Przycisk */}
+        <button
+          type="submit"
+          className="mt-8 w-full bg-primary hover:bg-blue-700 text-white py-3 rounded-md font-semibold tracking-wider transition"
+        >
+          Zapisz samochód
+        </button>
+      </form>
+    </div>
   );
 }

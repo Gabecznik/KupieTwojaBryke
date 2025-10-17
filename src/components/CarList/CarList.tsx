@@ -1,68 +1,98 @@
 import React from "react";
-import './CarList.scss';
-//import cars from '../../../public/api/cars.json'
 import type { Car } from "../../types/Car";
 
 type Props = {
-    cars: Car[],
-    searchValue: string,
-    setSearchValue: (value: string) => void
-}
+  cars: Car[];
+  searchValue: string;
+  setSearchValue: (value: string) => void;
+};
 
 export const CarList: React.FC<Props> = ({ cars, searchValue, setSearchValue }) => {
-    return (
-        <div className="car-list__content">
-            <div className="car-list__filter">
-                <h1 className="car-list__filter-title">Filtry</h1>
-                <input 
-                    type="text" 
-                    placeholder="Wpisz model lub markę" 
-                    value={searchValue} 
-                    onChange={e => setSearchValue(e.target.value)}
-                    className="car-list__text-input"
-                />
-            </div>
-            <ul className="car-list__list">
-                {cars.map(c =>
-                    <div key={c.id} className="car-list__element">
-                        <img className="car-list__car-image" src="public\images\car-angled-front-left-svgrepo-com.svg" />
-                        <div className="car-list__car-info">
-                            <div className="car-list__initial-info">
-                                <div className="car-list__title-info">
-                                    <div className="car-list__title">
-                                        {`${c.brand} ${c.model}`}
-                                    </div>
-                                    <div className="car-list__secondary-info">
-                                        {`${c.engineCapacity} - ${c.enginePower} - ${c.brand} ${c.model}`}
-                                    </div>
-                                </div>
-                                <div className="car-list__price">
-                                    {`${c.price} PLN`}
-                                </div>
-                            </div>
-                            <div className="car-list__additional-info">
-                                <div>
-                                    <img className="car-list__info-emoji" src="\public\images\odometer-svgrepo-com.svg" />
-                                    {`${c.mileage} km`}
-                                </div>
-                                <div>
-                                    <img className="car-list__info-emoji" src="public\images\fuel-dispenser-svgrepo-com.svg" />
-                                    {c.fuelType}
-                                </div>
-                                <div>
-                                    <img className="car-list__info-emoji" src="public\images\transmission-svgrepo-com.svg" />
-                                    {c.transmission}
-                                </div>
-                                <div>
-                                    <img className="car-list__info-emoji" src="public\images\calendar-lines-svgrepo-com.svg" />
-                                    {c.yearOfProduction}
-                                </div>
-                            </div>
-                        </div>
+  return (
+    <div className="flex flex-col md:flex-row gap-6 w-full">
+      {/* 🔹 Panel filtrów */}
+      <aside className="bg-white border border-gray-200 rounded-xl p-6 shadow-sm md:w-80 sticky top-4 h-fit">
+        <h2 className="text-lg font-semibold text-gray-700 mb-4">Filtry</h2>
+        <input
+          type="text"
+          placeholder="Wpisz model lub markę..."
+          value={searchValue}
+          onChange={(e) => setSearchValue(e.target.value)}
+          className="w-full border border-gray-300 rounded-md px-3 py-2 text-sm focus:ring-2 focus:ring-blue-500 focus:outline-none"
+        />
+      </aside>
 
-                    </div>
-                )}
-            </ul>
-        </div>
-    )
-}
+      {/* 🔹 Lista samochodów */}
+      <ul className="flex-1 flex flex-col gap-4 overflow-y-auto pr-2 md:pr-4">
+        {cars.map((c) => (
+          <div
+            key={c.id}
+            className="flex flex-col sm:flex-row gap-6 bg-white p-4 rounded-xl border border-gray-200 shadow-sm hover:shadow-md transition"
+          >
+            {/* 🔸 Zdjęcie */}
+            <img
+              className="w-full sm:w-32 h-40 sm:h-24 object-cover rounded-md"
+              src="/images/car-angled-front-left-svgrepo-com.svg"
+              alt={`${c.brand} ${c.model}`}
+            />
+
+            {/* 🔸 Informacje */}
+            <div className="flex flex-col justify-between flex-1">
+              {/* Główne info */}
+              <div className="flex justify-between flex-wrap gap-2">
+                <div className="text-lg font-semibold">
+                  <div>{`${c.brand} ${c.model}`}</div>
+                  <div className="text-blue-600 font-medium text-sm">
+                    {`${c.engineCapacity} • ${c.enginePower}`}
+                  </div>
+                </div>
+                <div className="text-blue-600 font-bold text-lg">
+                  {`${c.price} PLN`}
+                </div>
+              </div>
+
+              {/* Dodatkowe informacje */}
+              <div className="flex flex-wrap gap-4 mt-3 text-sm text-gray-600">
+                <div className="flex items-center gap-2">
+                  <img
+                    className="w-4 h-4 opacity-70"
+                    src="/images/odometer-svgrepo-com.svg"
+                    alt="mileage"
+                  />
+                  {`${c.mileage} km`}
+                </div>
+
+                <div className="flex items-center gap-2">
+                  <img
+                    className="w-4 h-4 opacity-70"
+                    src="/images/fuel-dispenser-svgrepo-com.svg"
+                    alt="fuel"
+                  />
+                  {c.fuelType}
+                </div>
+
+                <div className="flex items-center gap-2">
+                  <img
+                    className="w-4 h-4 opacity-70"
+                    src="/images/transmission-svgrepo-com.svg"
+                    alt="gearbox"
+                  />
+                  {c.transmission}
+                </div>
+
+                <div className="flex items-center gap-2">
+                  <img
+                    className="w-4 h-4 opacity-70"
+                    src="/images/calendar-lines-svgrepo-com.svg"
+                    alt="year"
+                  />
+                  {c.yearOfProduction}
+                </div>
+              </div>
+            </div>
+          </div>
+        ))}
+      </ul>
+    </div>
+  );
+};
