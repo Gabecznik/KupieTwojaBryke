@@ -48,7 +48,7 @@ export function CarForm() {
           Dodaj samochód
         </h1>
 
-        <div className="grid grid-cols-1 sm:grid-cols-2 gap-6">
+        <div className="grid grid-cols-1 gap-6">
           {/* Id */}
           <div>
             <label className="block mb-1 text-sm text-textMuted">Nr ID</label>
