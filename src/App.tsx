@@ -4,7 +4,8 @@ import { useState } from "react";
 import { CarList } from "./components/CarList/CarList";
 import { CarForm } from "./components/CarForm/CarForm";
 import { Home } from "./components/pages/Home";
-import { Layout } from "./layout/Layout"; // ✅ Twój nowy wspólny layout
+import { Layout } from "./layout/Layout";
+import { CarDetails } from "./components/CarDetails/CarDetails";
 import cars from "../public/api/cars.json";
 
 function App() {
@@ -71,6 +72,7 @@ function App() {
           />
 
           {/* 🔹 Formularz dodawania samochodu */}
+        <Route path="/list/:id" element={<CarDetails />} />
           <Route path="/form" element={<CarForm />} />
         </Route>
       </Routes>

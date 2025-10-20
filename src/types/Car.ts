@@ -15,8 +15,8 @@ export type Car = {
     engineCapacity: string, // pojemność silnika !
     enginePower: string, // moc silnika
     fuelType: string, // rodzaj paliwa !
-    numberOfSeats: number, // liczba siedzeń
-    bodyType: string, // rodzaj nadwozia !
+    numberOfSeats: number, // liczba miejsc
+    bodyType: string, // typ nadwozia !
     transmission: string, // skrzynia biegów !
     numberOfDoors: number, // liczba drzwi
     notes: string, // uwagi

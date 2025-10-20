@@ -1,5 +1,6 @@
 import React from "react";
 import type { Car } from "../../types/Car";
+import { Link } from "react-router-dom";
 
 type Props = {
   cars: Car[];
@@ -61,10 +62,13 @@ export const CarList: React.FC<Props> = ({
       {/* Lista samochodów */}
       <ul className="flex-1 flex flex-col gap-4 overflow-y-auto pr-2 md:pr-4">
         {cars.map((c) => (
-          <div
-            key={c.id}
-            className="flex flex-col sm:flex-row gap-6 bg-surface p-4 rounded-xl border border-gray-700 shadow-xl hover:shadow-xl transition-all duration-300"
-          >
+          <li key={c.id} className="w-full">
+            <Link to={`/list/${c.id}`} 
+              className="w-full flex flex-col sm:flex-row gap-6 
+                   bg-surface p-4 rounded-xl border border-gray-700 
+                   shadow-xl hover:shadow-2xl hover:-translate-y-1 
+                   transition-all duration-300">
+
             {/* Zdjęcie */}
             <img
               className="w-full sm:w-32 h-40 sm:h-24 object-cover rounded-md"
@@ -126,7 +130,8 @@ export const CarList: React.FC<Props> = ({
                 </div>
               </div>
             </div>
-          </div>
+            </Link>
+          </li>
         ))}
       </ul>
     </div>
