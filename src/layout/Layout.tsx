@@ -1,11 +1,11 @@
 import { Link, NavLink, Outlet } from "react-router-dom";
-import logo from "../images/logo.png"
+import logo from "../../public/images/logo.png"
 
 export function Layout() {
   return (
     <div className="min-h-screen flex flex-col bg-background text-textMain font-sans">
       {/* Nawigacja */}
-      <nav className="bg-surface/95 backdrop-blur-sm border-b border-gray-700 shadow-md">
+      <nav className="bg-navigation backdrop-blur-sm border-b border-gray-700 shadow-md">
         <div className="max-w-6xl mx-auto flex justify-between items-center px-6 py-3">
           <Link to="/" className="flex items-center gap-3 hover:opacity-90 transition">
             <img
@@ -13,8 +13,8 @@ export function Layout() {
               alt="Logo"
               className="h-12 object-contain rounded-md"
             />
-            <span className="text-xl font-bold text-primary tracking-wide">
-              {/* Kupię Twoją Brykę */}
+            <span className="text-m font-bold text-primary tracking-wide">
+              Kupię Twoją Brykę
             </span>
           </Link>
 
@@ -67,7 +67,7 @@ export function Layout() {
       </main>
 
       {/* Stopka */}
-      <footer className="bg-surface border-t border-gray-700 text-center p-4 text-sm text-textMuted">
+      <footer className="bg-navigation border-t border-gray-700 text-center p-4 text-sm text-textMuted">
         © 2025 Wszelkie prawa zastrzeżone.
       </footer>
     </div>

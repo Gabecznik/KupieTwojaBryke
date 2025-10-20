@@ -20,19 +20,28 @@ export const CarList: React.FC<Props> = ({
   return (
     <div className="flex flex-col md:flex-row gap-6 w-full">
       {/* 🔹 Panel filtrów */}
-      <aside className="bg-surface border border-gray-200 rounded-xl p-6 shadow-xl md:w-80 sticky top-4 h-fit">
+      <aside className="bg-surface border border-gray-700 rounded-xl p-6 shadow-xl md:w-80 sticky top-4 h-fit">
         <h2 className="text-lg font-semibold text-textMain mb-4">Filtry</h2>
 
         <label className="block text-sm text-textMuted mb-1">Filtruj po:</label>
         <select
           value={filterField}
           onChange={(e) => setFilterField(e.target.value)}
-          className="w-full mb-3 bg-background border border-gray-600 text-textMain rounded-md px-3 py-2 text-sm focus:ring-2 focus:ring-primary"
+          className="w-full mb-3 bg-white border border-gray-600 text-textMain rounded-md px-3 py-2 text-sm focus:ring-2 focus:ring-primary"
         >
-          <option value="model">Model</option>
           <option value="brand">Marka</option>
-          <option value="fuelType">Rodzaj paliwa</option>
+          <option value="model">Model</option>
+          <option value="registrationNumber">Numer rejestracyjny</option>
+          <option value="mileage">Przebieg</option>
+          <option value="price">Price</option>
+          <option value="insuranceValidUntil">Koniec ubezpieczenia</option>
+          <option value="inspectionValidUntil">Koniec przeglądu</option>
+          <option value="vehicleType">Rodzaj pojazdu</option>
           <option value="yearOfProduction">Rok produkcji</option>
+          <option value="engineCapacity">Pojemność silnika</option>
+          <option value="fuelType">Rodzaj paliwa</option>
+          <option value="bodyType">Rodzaj nadwozia</option>
+          <option value="transmission">Skrzynia biegów</option>
         </select>
 
         <label className="block text-sm text-textMuted mb-1">
@@ -83,7 +92,7 @@ export const CarList: React.FC<Props> = ({
                 <div className="flex items-center gap-2">
                   <img
                     className="w-4 h-4 opacity-70"
-                    src="/images/odometer-svgrepo-com.svg"
+                    src="/images/odometer-svgrepo-com1.svg"
                     alt="mileage"
                   />
                   {`${c.mileage} km`}
@@ -92,7 +101,7 @@ export const CarList: React.FC<Props> = ({
                 <div className="flex items-center gap-2">
                   <img
                     className="w-4 h-4 opacity-70"
-                    src="/images/fuel-dispenser-svgrepo-com.svg"
+                    src="/images/fuel-dispenser-svgrepo-com1.svg"
                     alt="fuel"
                   />
                   {c.fuelType}
@@ -101,7 +110,7 @@ export const CarList: React.FC<Props> = ({
                 <div className="flex items-center gap-2">
                   <img
                     className="w-4 h-4 opacity-70"
-                    src="/images/transmission-svgrepo-com.svg"
+                    src="/images/transmission-svgrepo-com1.svg"
                     alt="gearbox"
                   />
                   {c.transmission}
@@ -110,7 +119,7 @@ export const CarList: React.FC<Props> = ({
                 <div className="flex items-center gap-2">
                   <img
                     className="w-4 h-4 opacity-70"
-                    src="/images/calendar-lines-svgrepo-com.svg"
+                    src="/images/calendar-lines-svgrepo-com1.svg"
                     alt="year"
                   />
                   {c.yearOfProduction}

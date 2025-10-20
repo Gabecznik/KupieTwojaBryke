@@ -42,7 +42,7 @@ export function CarForm() {
     <div className="flex justify-center items-center">
       <form
         onSubmit={handleSubmit(onSubmit)}
-        className="w-full max-w-2xl bg-surface p-8 rounded-2xl shadow-lg border border-gray-700"
+        className="w-full max-w-2xl bg-surface p-8 rounded-xl border border-gray-600 shadow-md hover:shadow-lg transition-all duration-300"
       >
         <h1 className="text-2xl font-bold mb-6 text-primary text-center">
           Dodaj samochód

@@ -6,8 +6,9 @@ export default {
   theme: {
     colors: {
       ...colors,
-      background: "#cdcdcdff",
-      surface: "#f3f3f3ff",
+      background: "#9c9ba9ff",
+      navigation: "#ffffffff",
+      surface: "#e9e9e9ff",
       primary: "#376fc8ff",
       accent: "#facc15",
       orangeAccent: "#f59e0b",
@@ -18,3 +19,13 @@ export default {
   },
   plugins: [],
 };
+
+
+      // background: "#cdcdcdff",
+      // surface: "#f3f3f3ff",
+      // primary: "#376fc8ff",
+      // accent: "#facc15",
+      // orangeAccent: "#f59e0b",
+      // textMain: "#151134ff",
+      // textMuted: "#07398fff",
+      // textPlain: "#060034ff",
