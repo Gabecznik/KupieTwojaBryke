@@ -42,7 +42,7 @@ export function Layout() {
                 }`
               }
             >
-              Lista aut
+              Lista pojazdów
             </NavLink>
 
             <NavLink
@@ -55,7 +55,7 @@ export function Layout() {
                 }`
               }
             >
-              Dodaj auto
+              Dodaj pojazd
             </NavLink>
           </div>
         </div>
