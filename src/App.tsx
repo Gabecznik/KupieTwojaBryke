@@ -1,41 +1,83 @@
-import { useState } from 'react'
-import reactLogo from './assets/react.svg'
-import viteLogo from '/vite.svg'
-import './App.css'
-import CarForm from './components/CarForm/CarForm'
+import { BrowserRouter, Routes, Route } from "react-router-dom";
+import { useState } from "react";
+
+import { CarList } from "./components/CarList/CarList";
+import { CarForm } from "./components/CarForm/CarForm";
+import { Home } from "./components/pages/Home";
+import { Layout } from "./layout/Layout";
+import { CarDetails } from "./components/CarDetails/CarDetails";
+import cars from "../public/api/cars.json";
 
 function App() {
-  const [count, setCount] = useState(0)
+  const [searchValue, setSearchValue] = useState<string>("");
+  const [filterField, setFilterField] = useState<string>("brand")
+
+  const filteredCars = cars.filter(
+    (c) => {
+      const val = searchValue.toLocaleLowerCase().trim();
+
+      if (!val) return true;
+
+      switch (filterField) {
+        case "model":
+          return c.model.toLowerCase().includes(val);
+        case "registrationNumber":
+          return c.registrationNumber.toLowerCase().includes(val);
+        case "mileage":
+          return String(c.mileage).includes(val);
+        case "price":
+          return String(c.price).includes(val);
+        case "insuranceValidUntil":
+          return c.insuranceValidUntil.toLowerCase().includes(val);
+        case "inspectionValidUntil":
+          return c.inspectionValidUntil.toLowerCase().includes(val);
+        case "vehicleType":
+          return c.vehicleType.toLowerCase().includes(val);
+        case "yearOfProduction":
+          return String(c.yearOfProduction).includes(val);
+        case "engineCapacity":
+          return c.engineCapacity.toString().includes(val);
+        case "fuelType":
+          return c.fuelType.toLowerCase().includes(val);
+        case "bodyType":
+          return c.bodyType.toLowerCase().includes(val);
+        case "transmission":
+          return c.transmission.toLowerCase().includes(val);
+        default:
+          return c.brand.toLowerCase().includes(val);
+      }
+    }
+   );
 
   return (
-    <>
-      <div>
-        <a href="https://vite.dev" target="_blank">
-          <img src={viteLogo} className="logo" alt="Vite logo" />
-        </a>
-        <a href="https://react.dev" target="_blank">
-          <img src={reactLogo} className="logo react" alt="React logo" />
-        </a>
-      </div>
-      <h1>Vite + React</h1>
-      <div className="card">
-        <button onClick={() => setCount((count) => count + 1)}>
-          count is {count}
-        </button>
-        <p>
-          Edit <code>src/App.tsx</code> and save to test HMR
-        </p>
-      </div>
-      <p className="read-the-docs">
-        Click on the Vite and React logos to learn more
-      </p>
+    <BrowserRouter>
+      {/* ✅ Layout otacza wszystkie podstrony */}
+      <Routes>
+        <Route element={<Layout />}>
+          {/* 🔹 Strona główna */}
+          <Route path="/" element={<Home />} />
 
-    <hr />
-      <h2>Dodaj samochód</h2>
-      <CarForm />
+          {/* 🔹 Lista samochodów */}
+          <Route
+            path="/list"
+            element={
+              <CarList
+                cars={filteredCars}
+                searchValue={searchValue}
+                setSearchValue={setSearchValue}
+                filterField={filterField}
+                setFilterField={setFilterField}
+              />
+            }
+          />
 
-    </>
-  )
+          {/* 🔹 Formularz dodawania samochodu */}
+        <Route path="/list/:id" element={<CarDetails />} />
+          <Route path="/form" element={<CarForm />} />
+        </Route>
+      </Routes>
+    </BrowserRouter>
+  );
 }
 
-export default App
+export default App;

@@ -1,0 +1,139 @@
+import React from "react";
+import type { Car } from "../../types/Car";
+import { Link } from "react-router-dom";
+
+type Props = {
+  cars: Car[];
+  searchValue: string;
+  setSearchValue: (value: string) => void;
+  filterField: string;
+  setFilterField: (value: string) => void;
+};
+
+export const CarList: React.FC<Props> = ({ 
+  cars, 
+  searchValue, 
+  setSearchValue,
+  filterField,
+  setFilterField
+  }) => {
+
+  return (
+    <div className="flex flex-col md:flex-row gap-6 w-full">
+      {/* 🔹 Panel filtrów */}
+      <aside className="bg-surface border border-gray-700 rounded-xl p-6 shadow-xl md:w-80 sticky top-4 h-fit">
+        <h2 className="text-lg font-semibold text-textMain mb-4">Filtry</h2>
+
+        <label className="block text-sm text-textMuted mb-1">Filtruj po:</label>
+        <select
+          value={filterField}
+          onChange={(e) => setFilterField(e.target.value)}
+          className="w-full mb-3 bg-white border border-gray-600 text-textMain rounded-md px-3 py-2 text-sm focus:ring-2 focus:ring-primary"
+        >
+          <option value="brand">Marka</option>
+          <option value="model">Model</option>
+          <option value="registrationNumber">Numer rejestracyjny</option>
+          <option value="mileage">Przebieg</option>
+          <option value="price">Price</option>
+          <option value="insuranceValidUntil">Koniec ubezpieczenia</option>
+          <option value="inspectionValidUntil">Koniec przeglądu</option>
+          <option value="vehicleType">Rodzaj pojazdu</option>
+          <option value="yearOfProduction">Rok produkcji</option>
+          <option value="engineCapacity">Pojemność silnika</option>
+          <option value="fuelType">Rodzaj paliwa</option>
+          <option value="bodyType">Rodzaj nadwozia</option>
+          <option value="transmission">Skrzynia biegów</option>
+        </select>
+
+        <label className="block text-sm text-textMuted mb-1">
+          {/* Wpisz wartość: */}
+        </label>
+
+
+        <input
+          type="text"
+          placeholder="Wpisz model lub markę..."
+          value={searchValue}
+          onChange={(e) => setSearchValue(e.target.value)}
+          className="w-full border border-gray-300 rounded-md px-3 py-2 text-sm focus:ring-2 focus:ring-blue-500 focus:outline-none"
+        />
+      </aside>
+
+      {/* Lista samochodów */}
+      <ul className="flex-1 flex flex-col gap-4 overflow-y-auto pr-2 md:pr-4">
+        {cars.map((c) => (
+          <li key={c.id} className="w-full">
+            <Link to={`/list/${c.id}`} 
+              className="w-full flex flex-col sm:flex-row gap-6 
+                   bg-surface p-4 rounded-xl border border-gray-700 
+                   shadow-xl hover:shadow-2xl hover:-translate-y-1 
+                   transition-all duration-300">
+
+            {/* Zdjęcie */}
+            <img
+              className="w-full sm:w-32 h-40 sm:h-24 object-cover rounded-md"
+              src="/images/car-angled-front-left-svgrepo-com.svg"
+              alt={`${c.brand} ${c.model}`}
+            />
+
+            {/* Informacje */}
+            <div className="flex flex-col justify-between flex-1">
+              {/* Główne info */}
+              <div className="flex justify-between flex-wrap gap-2">
+                <div className="text-lg font-semibold">
+                  <div>{`${c.brand} ${c.model}`}</div>
+                  <div className="text-lg font-medium text-sm">
+                    {`${c.engineCapacity} • ${c.enginePower}`}
+                  </div>
+                </div>
+                <div className="text-textMuted font-bold text-lg">
+                  {`${c.price} PLN`}
+                </div>
+              </div>
+
+              {/* Dodatkowe informacje */}
+              <div className="flex flex-wrap gap-4 mt-3 text-sm text-textPlain">
+                <div className="flex items-center gap-2">
+                  <img
+                    className="w-4 h-4 opacity-70"
+                    src="/images/odometer-svgrepo-com1.svg"
+                    alt="mileage"
+                  />
+                  {`${c.mileage} km`}
+                </div>
+
+                <div className="flex items-center gap-2">
+                  <img
+                    className="w-4 h-4 opacity-70"
+                    src="/images/fuel-dispenser-svgrepo-com1.svg"
+                    alt="fuel"
+                  />
+                  {c.fuelType}
+                </div>
+
+                <div className="flex items-center gap-2">
+                  <img
+                    className="w-4 h-4 opacity-70"
+                    src="/images/transmission-svgrepo-com1.svg"
+                    alt="gearbox"
+                  />
+                  {c.transmission}
+                </div>
+
+                <div className="flex items-center gap-2">
+                  <img
+                    className="w-4 h-4 opacity-70"
+                    src="/images/calendar-lines-svgrepo-com1.svg"
+                    alt="year"
+                  />
+                  {c.yearOfProduction}
+                </div>
+              </div>
+            </div>
+            </Link>
+          </li>
+        ))}
+      </ul>
+    </div>
+  );
+};
