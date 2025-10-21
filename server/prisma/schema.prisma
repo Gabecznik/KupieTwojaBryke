@@ -1,0 +1,42 @@
+// This is your Prisma schema file,
+// learn more about it in the docs: https://pris.ly/d/prisma-schema
+
+// Looking for ways to speed up your queries, or scale easily with your serverless or edge functions?
+// Try Prisma Accelerate: https://pris.ly/cli/accelerate-init
+
+generator client {
+  provider = "prisma-client-js"
+  output   = "../generated/prisma"
+}
+
+datasource db {
+  provider = "postgresql"
+  url      = env("DATABASE_URL")
+}
+
+model Car {
+  id                     Int       @id @default(autoincrement())
+  brand                  String
+  model                  String
+  image                  String
+  registrationNumber     String    @unique
+  vin                    String    @unique
+  mileage                Int
+  price                  Int
+  insuranceValidUntil    DateTime
+  inspectionValidUntil   DateTime
+  firstRegistrationDate  DateTime
+  vehicleType            String
+  yearOfProduction       Int
+  engineCapacity         String
+  enginePower            String
+  fuelType               String
+  numberOfSeats          Int
+  bodyType               String
+  transmission           String
+  numberOfDoors          Int
+  notes                  String?
+  purchaseDate           DateTime
+
+  @@map("cars") // opcjonalnie: nazwa tabeli w bazie danych
+}
