@@ -1,4 +1,3 @@
-import React from "react";
 import { useForm } from "react-hook-form";
 import type { Car } from "../../types/Car";
 
@@ -9,7 +8,6 @@ export function CarForm() {
     formState: { errors },
   } = useForm<Car>({
     defaultValues: {
-      id: 0,
       model: "",
       brand: "",
       image: undefined,
@@ -34,8 +32,43 @@ export function CarForm() {
     },
   });
 
-  const onSubmit = (data: Car) => {
-    alert(JSON.stringify(data, null, 2));
+  const onSubmit = async (data: Car) => {
+    try {
+      const body = {
+        ...data,
+        mileage: Number(data.mileage),
+        price: Number(data.price),
+        yearOfProduction: Number(data.yearOfProduction),
+        numberOfSeats: Number(data.numberOfSeats),
+        numberOfDoors: Number(data.numberOfDoors),
+        firstRegistrationDate: new Date(data.firstRegistrationDate),
+        purchaseDate: new Date(data.purchaseDate),
+        insuranceValidUntil: new Date(data.insuranceValidUntil),
+        inspectionValidUntil: new Date(data.inspectionValidUntil),
+        image: data.image ? String(data.image) : "",
+      };
+  
+      console.log("Body do wysłania:", body);
+  
+      const response = await fetch("http://localhost:4000/products", {
+        method: "POST",
+        headers: { "Content-Type": "application/json" },
+        body: JSON.stringify(body),
+      });
+  
+      if (!response.ok) {
+        const text = await response.text();
+        console.error("Response error:", text);
+        throw new Error("Błąd przy zapisie samochodu");
+      }
+  
+      const newCar = await response.json();
+      console.log("Dodano samochód: ", newCar);
+      alert("Samochód zapisany");
+    } catch (error) {
+      console.error(error);
+      alert("Wystąpił błąd przy dodawaniu samochodu");
+    }
   };
 
   return (
@@ -49,19 +82,6 @@ export function CarForm() {
         </h1>
 
         <div className="grid grid-cols-1 gap-6">
-          
-          {/* Id */}
-          <div>
-            <label className="block mb-1 text-sm text-textMuted">Nr ID</label>
-            <input
-              type="number"
-              {...register("id", { required: true })}
-              className="w-full px-3 py-2 rounded-md bg-white border border-gray-600 focus:border-primary focus:ring-2 focus:ring-primary focus:outline-none"
-            />
-            {errors.id && (
-              <p className="text-accent text-sm mt-1">Nr ID jest wymagany</p>
-            )}
-          </div>
 
           {/* Marka */}
           <div>
@@ -89,17 +109,6 @@ export function CarForm() {
                 Model jest wymagany (min. 2 znaki)
               </p>
             )}
-          </div>
-
-          {/* Zdjęcie */}
-          <div>
-            <label className="block mb-1 text-sm text-textMuted">Zdjęcie pojazdu</label>
-            <input
-              type="file"
-              accept="image/*"
-              {...register("image")}
-              className="w-full px-3 py-2 rounded-md bg-white border border-gray-600 focus:border-primary focus:ring-2 focus:ring-primary focus:outline-none"
-            />
           </div>
           
           {/* Nr rejestracyjny */}

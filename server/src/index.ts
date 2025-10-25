@@ -24,11 +24,17 @@ app.get("/products/:id", async (req, res) => {
 });
 
 app.post("/products", async (req, res) => {
-  //const { name, description, price } = req.body;
-  const product = await prisma.car.create({
-    data: req.body,
-  });
-  res.status(201).json(product);
+  try {
+    console.log("Odebrano body:", req.body);
+    const product = await prisma.car.create({
+      data: req.body,
+    });
+    res.status(201).json(product);
+  } catch (error) {
+    const e = error as Error
+    console.error("Błąd przy zapisie samochodu:", e);
+    res.status(500).json({ error: "Błąd serwera", details: e.message });
+  }
 });
 
 app.delete("/products/:id", async (req, res) => {
