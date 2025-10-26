@@ -1,5 +1,6 @@
 import { useParams, Link } from "react-router-dom";
-import cars from "../../../public/api/cars.json"; // dostosuj ścieżkę
+import cars from "../../../public/api/cars.json"; 
+import { CarTasks } from "../CarTasks/CarTasks";
 
 export function CarDetails() {
   const { id } = useParams<{ id: string }>();
@@ -38,30 +39,30 @@ export function CarDetails() {
     </div>
 
     {/* Dane samochodu */}
-    <div className="w-full max-w-md space-y-2">
-        <p><span className="text-textMuted">Numer rejestracyjny:</span> {car.registrationNumber}</p>
-        <p><span className="text-textMuted">Numer VIN:</span> {car.vin}</p>
-        <p><span className="text-textMuted">Cena:</span> {car.price} PLN</p>
-        <p><span className="text-textMuted">Przebieg:</span> {car.mileage} km</p>
-        <p><span className="text-textMuted">Rok produkcji:</span> {car.yearOfProduction}</p>
-        <p><span className="text-textMuted">Rodzaj pojazdu:</span> {car.vehicleType}</p>
-        <p><span className="text-textMuted">Pojemność silnika:</span> {car.engineCapacity}</p>
-        <p><span className="text-textMuted">Moc silnika:</span> {car.enginePower}</p>
-        <p><span className="text-textMuted">Rodzaj paliwa:</span> {car.fuelType}</p>
-        <p><span className="text-textMuted">Typ nadwozia:</span> {car.bodyType}</p>
-        <p><span className="text-textMuted">Skrzynia biegów:</span> {car.transmission}</p>
-        <p><span className="text-textMuted">Liczba miejsc:</span> {car.numberOfSeats}</p>
-        <p><span className="text-textMuted">Liczba drzwi:</span> {car.numberOfDoors}</p>
-        <p><span className="text-textMuted">Ubezpieczenie do:</span> {car.insuranceValidUntil}</p>
-        <p><span className="text-textMuted">Przegląd do:</span> {car.inspectionValidUntil}</p>
-        <p><span className="text-textMuted">Data pierwszej rejestracji:</span> {car.firstRegistrationDate}</p>
-        <p>
-        <span className="text-textMuted">Data zakupu:</span>
-        <span className="ml-2 bg-blue-500/20 text-blue-400 px-2 py-0.5 rounded-md">
-            {car.purchaseDate}
-        </span>
-        </p>
-    </div>
+        <div className="w-full max-w-md space-y-2">
+            <p><span className="text-textMuted">Numer rejestracyjny:</span> {car.registrationNumber}</p>
+            <p><span className="text-textMuted">Numer VIN:</span> {car.vin}</p>
+            <p><span className="text-textMuted">Cena:</span> {car.price} PLN</p>
+            <p><span className="text-textMuted">Przebieg:</span> {car.mileage} km</p>
+            <p><span className="text-textMuted">Rok produkcji:</span> {car.yearOfProduction}</p>
+            <p><span className="text-textMuted">Rodzaj pojazdu:</span> {car.vehicleType}</p>
+            <p><span className="text-textMuted">Pojemność silnika:</span> {car.engineCapacity}</p>
+            <p><span className="text-textMuted">Moc silnika:</span> {car.enginePower}</p>
+            <p><span className="text-textMuted">Rodzaj paliwa:</span> {car.fuelType}</p>
+            <p><span className="text-textMuted">Typ nadwozia:</span> {car.bodyType}</p>
+            <p><span className="text-textMuted">Skrzynia biegów:</span> {car.transmission}</p>
+            <p><span className="text-textMuted">Liczba miejsc:</span> {car.numberOfSeats}</p>
+            <p><span className="text-textMuted">Liczba drzwi:</span> {car.numberOfDoors}</p>
+            <p><span className="text-textMuted">Ubezpieczenie do:</span> {car.insuranceValidUntil}</p>
+            <p><span className="text-textMuted">Przegląd do:</span> {car.inspectionValidUntil}</p>
+            <p><span className="text-textMuted">Data pierwszej rejestracji:</span> {car.firstRegistrationDate}</p>
+            <p>
+            <span className="text-textMuted">Data zakupu:</span>
+            <span className="ml-2 bg-blue-500/20 text-blue-400 px-2 py-0.5 rounded-md">
+                {car.purchaseDate}
+            </span>
+            </p>
+        </div>
     </div>
 
                
@@ -79,10 +80,13 @@ export function CarDetails() {
                 >
                 <h2 className="text-lg font-semibold mb-2">Uwagi</h2>
                 <p className="whitespace-pre-line leading-relaxed">{car.notes}</p>
-                </div>
-                )}
+            </div>
+        )}
                                 
+    {/* Zadania */}
+        <CarTasks carId={Number(car.id)} />
 
+    {/* Back button */}
             <div className="mt-4 flex justify-center">
                 <Link to="/list"
                     className="mt-4 w-full md:w-auto text-center bg-primary hover:bg-blue-700 
@@ -92,6 +96,7 @@ export function CarDetails() {
                     Wróć do listy
                 </Link>
             </div>
+
         </div>
     </div>
   );

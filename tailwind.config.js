@@ -11,7 +11,7 @@ export default {
       surface: "#e9e9e9ff",
       primary: "#376fc8ff",
       accent: "#facc15",
-      orangeAccent: "#f59e0b",
+      orangeAccent: "#f5610bff",
       textMain: "#151134ff",
       textMuted: "#366ccaff",
       textPlain: "#332889ff",

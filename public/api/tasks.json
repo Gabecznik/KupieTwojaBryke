@@ -1,0 +1,12 @@
+[
+  { "id": 1, "carId": 1, "text": "Wymiana filtra oleju", "done": false },
+  { "id": 2, "carId": 1, "text": "Sprawdzić ciśnienie w oponach", "done": true },
+  { "id": 3, "carId": 2, "text": "Zaktualizować dane w systemie", "done": false },
+  { "id": 4, "carId": 2, "text": "Wymiana wycieraczek", "done": true },
+  { "id": 5, "carId": 3, "text": "Przegląd klimatyzacji", "done": false },
+  { "id": 6, "carId": 3, "text": "Sprawdzenie baterii hybrydowej", "done": false },
+  { "id": 7, "carId": 4, "text": "Czyszczenie wnętrza", "done": true },
+  { "id": 8, "carId": 5, "text": "Kontrola hamulców", "done": false },
+  { "id": 9, "carId": 6, "text": "Wymiana filtra kabinowego", "done": true },
+  { "id": 10, "carId": 6, "text": "Test systemu DSG", "done": false }
+]

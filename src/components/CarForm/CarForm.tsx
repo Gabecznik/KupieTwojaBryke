@@ -1,4 +1,3 @@
-import React from "react";
 import { useForm } from "react-hook-form";
 import type { Car } from "../../types/Car";
 
@@ -101,7 +100,7 @@ export function CarForm() {
               className="w-full px-3 py-2 rounded-md bg-white border border-gray-600 focus:border-primary focus:ring-2 focus:ring-primary focus:outline-none"
             />
           </div>
-          
+
           {/* Nr rejestracyjny */}
           <div>
             <label className="block mb-1 text-sm text-textMuted">Numer rejestracyjny</label>
