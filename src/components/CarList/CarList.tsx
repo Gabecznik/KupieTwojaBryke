@@ -1,4 +1,4 @@
-import React from "react";
+import React, { useState } from "react";
 import type { Car } from "../../types/Car";
 import { Link } from "react-router-dom";
 
@@ -8,128 +8,225 @@ type Props = {
   setSearchValue: (value: string) => void;
   filterField: string;
   setFilterField: (value: string) => void;
+  priceFrom: string;
+  setPriceFrom: (value: string) => void;
+  priceTo: string;
+  setPriceTo: (value: string) => void;
+  yearFrom: string;
+  setYearFrom: (value: string) => void;
+  yearTo: string;
+  setYearTo: (value: string) => void;
 };
 
-export const CarList: React.FC<Props> = ({ 
-  cars, 
-  searchValue, 
+export const CarList: React.FC<Props> = ({
+  cars,
+  searchValue,
   setSearchValue,
   filterField,
-  setFilterField
-  }) => {
+  setFilterField,
+  priceFrom,
+  setPriceFrom,
+  priceTo,
+  setPriceTo,
+  yearFrom,
+  setYearFrom,
+  yearTo,
+  setYearTo,
+}) => {
+  const [showFilters, setShowFilters] = useState(false);
+
 
   return (
-    <div className="flex flex-col md:flex-row gap-6 w-full">
-      {/* 🔹 Panel filtrów */}
-      <aside className="bg-surface border border-gray-700 rounded-xl p-6 shadow-xl md:w-80 sticky top-4 h-fit">
-        <h2 className="text-lg font-semibold text-textMain mb-4">Filtry</h2>
+    <div className="flex flex-col md:flex-row gap-6 w-full relative">
+      {/* 🔹 Mobilny przycisk pokazujący filtry */}
+      <button
+        onClick={() => setShowFilters(!showFilters)}
+        className="md:hidden self-end mb-3 bg-gray-800 text-white px-4 py-2 rounded-lg shadow hover:bg-gray-700 transition-all"
+      >
+        {showFilters ? "Ukryj filtry ✖️" : "Pokaż filtry ⚙️"}
+      </button>
 
-        <label className="block text-sm text-textMuted mb-1">Filtruj po:</label>
-        <select
-          value={filterField}
-          onChange={(e) => setFilterField(e.target.value)}
-          className="w-full mb-3 bg-white border border-gray-600 text-textMain rounded-md px-3 py-2 text-sm focus:ring-2 focus:ring-primary"
-        >
-          <option value="brand">Marka</option>
-          <option value="model">Model</option>
-          <option value="registrationNumber">Numer rejestracyjny</option>
-          <option value="mileage">Przebieg</option>
-          <option value="price">Price</option>
-          <option value="insuranceValidUntil">Koniec ubezpieczenia</option>
-          <option value="inspectionValidUntil">Koniec przeglądu</option>
-          <option value="vehicleType">Rodzaj pojazdu</option>
-          <option value="yearOfProduction">Rok produkcji</option>
-          <option value="engineCapacity">Pojemność silnika</option>
-          <option value="fuelType">Rodzaj paliwa</option>
-          <option value="bodyType">Rodzaj nadwozia</option>
-          <option value="transmission">Skrzynia biegów</option>
-        </select>
+      {/* 🔹 Panel boczny */}
+      <aside
+        className={`
+          bg-surface border border-gray-700 rounded-xl p-6 shadow-xl 
+          transition-all duration-300
+          md:sticky md:top-4 md:h-fit
+          w-full md:w-[380px] lg:w-[420px] 2xl:w-[460px]
+          ${showFilters ? "block" : "hidden md:block"}
+        `}
+      >
+        <h2 className="text-xl font-semibold text-textMain mb-6">Filtry</h2>
 
-        <label className="block text-sm text-textMuted mb-1">
-          {/* Wpisz wartość: */}
-        </label>
+        <div className="flex flex-col gap-6">
+          {/* 🔹 Sekcja: Podstawowe dane */}
+          <div>
+            <div className="grid grid-cols-1 gap-4">
+              {/* Marka */}
+              <input
+                type="text"
+                placeholder="Marka"
+                value={filterField === "brand" ? searchValue : ""}
+                onChange={(e) => {
+                  setFilterField("brand");
+                  setSearchValue(e.target.value);
+                }}
+                className="border border-gray-300 rounded-md px-3 py-2 text-sm w-full focus:ring-2 focus:ring-blue-500 focus:outline-none"
+              />
 
+              {/* Model */}
+              <input
+                type="text"
+                placeholder="Model"
+                value={filterField === "model" ? searchValue : ""}
+                onChange={(e) => {
+                  setFilterField("model");
+                  setSearchValue(e.target.value);
+                }}
+                className="border border-gray-300 rounded-md px-3 py-2 text-sm w-full focus:ring-2 focus:ring-blue-500 focus:outline-none"
+              />
+            </div>
+          </div>
 
-        <input
-          type="text"
-          placeholder="Wpisz model lub markę..."
-          value={searchValue}
-          onChange={(e) => setSearchValue(e.target.value)}
-          className="w-full border border-gray-300 rounded-md px-3 py-2 text-sm focus:ring-2 focus:ring-blue-500 focus:outline-none"
-        />
+          {/* 🔹 Sekcja: Parametry */}
+          <div>
+            <div className="grid grid-cols-1 gap-4">
+              {/* Cena */}
+              <div className="flex flex-col gap-3">
+
+              <div className="grid grid-cols-2 gap-3">
+                {/* Cena od */}
+                <input
+                  type="text"
+                  inputMode="numeric"
+                  placeholder="Cena od"
+                  value={priceFrom}
+                  onChange={(e) => {
+                    const value = e.target.value.replace(/\D/g, "");
+                    setPriceFrom(value);
+                  }}
+                  className="border border-gray-300 rounded-md px-3 py-2 text-sm focus:ring-2 focus:ring-blue-500 focus:outline-none"
+                />
+
+                {/* Cena do */}
+                <input
+                  type="text"
+                  inputMode="numeric"
+                  placeholder="Cena do"
+                  value={priceTo}
+                  onChange={(e) => {
+                    const value = e.target.value.replace(/\D/g, "");
+                    setPriceTo(value);
+                  }}
+                  className="border border-gray-300 rounded-md px-3 py-2 text-sm focus:ring-2 focus:ring-blue-500 focus:outline-none"
+                />
+              </div>
+            </div>
+
+              {/* Rok */}
+              <div className="flex flex-col gap-3">
+                  <div className="grid grid-cols-2 gap-3">
+                  <input
+                    type="text"
+                    inputMode="numeric"
+                    placeholder="Rok od"
+                    value={yearFrom}
+                    onChange={(e) => {
+                      const value = e.target.value.replace(/\D/g, "");
+                      setYearFrom(value);
+                    }}
+                    className="border border-gray-300 rounded-md px-3 py-2 text-sm w-full focus:ring-2 focus:ring-blue-500 focus:outline-none"
+                  />
+
+                  <input
+                    type="text"
+                    inputMode="numeric"
+                    placeholder="Rok do"
+                    value={yearTo}
+                    onChange={(e) => {
+                      const value = e.target.value.replace(/\D/g, "");
+                      setYearTo(value);
+                    }}
+                    className="border border-gray-300 rounded-md px-3 py-2 text-sm w-full focus:ring-2 focus:ring-blue-500 focus:outline-none"
+                  />
+                </div>
+              </div>
+
+              {/* Paliwo */}
+              <select
+                value={filterField === "fuelType" ? searchValue : ""}
+                onChange={(e) => {
+                  setFilterField("fuelType");
+                  setSearchValue(e.target.value);
+                }}
+                className="border border-gray-300 rounded-md px-3 py-2 text-sm w-full bg-white text-gray-700 focus:ring-2 focus:ring-blue-500 focus:outline-none"
+              >
+                <option value="" disabled selected hidden>
+                  Rodzaj paliwa...
+                </option>
+                <option value="Benzyna">Benzyna</option>
+                <option value="Diesel">Diesel</option>
+                <option value="Hybryda">Hybryda</option>
+                <option value="Elektryczny">Elektryczny</option>
+              </select>
+
+              {/* Nadwozie */}
+              <select
+                value={filterField === "bodyType" ? searchValue : ""}
+                onChange={(e) => {
+                  setFilterField("bodyType");
+                  setSearchValue(e.target.value);
+                }}
+                className="border border-gray-300 rounded-md px-3 py-2 text-sm w-full bg-white text-gray-700 focus:ring-2 focus:ring-blue-500 focus:outline-none"
+              >
+                <option value="" disabled selected hidden>
+                  Typ nadwozia...
+                </option>
+                <option value="Sedan">Sedan</option>
+                <option value="Kombi">Kombi</option>
+                <option value="SUV">SUV</option>
+                <option value="Hatchback">Hatchback</option>
+                <option value="Coupe">Coupe</option>
+                <option value="Van">Van</option>
+              </select>
+            </div>
+          </div>
+        </div>
       </aside>
 
-      {/* Lista samochodów */}
+      {/* 🔹 Lista samochodów */}
       <ul className="flex-1 flex flex-col gap-4 overflow-y-auto pr-2 md:pr-4">
         {cars.map((c) => (
           <li key={c.id} className="w-full">
-            <Link to={`/list/${c.id}`} 
+            <Link
+              to={`/list/${c.id}`}
               className="w-full flex flex-col sm:flex-row gap-6 
-                   bg-surface p-4 rounded-xl border border-gray-700 
-                   shadow-xl hover:shadow-2xl hover:-translate-y-1 
-                   transition-all duration-300">
+                 bg-surface p-4 rounded-xl border border-gray-700 
+                 shadow-xl hover:shadow-2xl hover:-translate-y-1 
+                 transition-all duration-300"
+            >
+              <img
+                className="w-full sm:w-40 h-40 sm:h-28 object-cover rounded-md"
+                src="/images/car-angled-front-left-svgrepo-com.svg"
+                alt={`${c.brand} ${c.model}`}
+              />
 
-            {/* Zdjęcie */}
-            <img
-              className="w-full sm:w-32 h-40 sm:h-24 object-cover rounded-md"
-              src="/images/car-angled-front-left-svgrepo-com.svg"
-              alt={`${c.brand} ${c.model}`}
-            />
-
-            {/* Informacje */}
-            <div className="flex flex-col justify-between flex-1">
-              {/* Główne info */}
-              <div className="flex justify-between flex-wrap gap-2">
-                <div className="text-lg font-semibold">
-                  <div>{`${c.brand} ${c.model}`}</div>
-                  <div className="text-lg font-medium text-sm">
-                    {`${c.engineCapacity} • ${c.enginePower}`}
+              <div className="flex flex-col justify-between flex-1">
+                <div className="flex justify-between flex-wrap gap-2">
+                  <div className="text-lg font-semibold">
+                    <div>{`${c.brand} ${c.model}`}</div>
+                    <div className="text-sm text-gray-400">{`${c.engineCapacity} • ${c.enginePower}`}</div>
                   </div>
+                  <div className="text-textMuted font-bold text-lg">{`${c.price} PLN`}</div>
                 </div>
-                <div className="text-textMuted font-bold text-lg">
-                  {`${c.price} PLN`}
+
+                <div className="flex flex-wrap gap-4 mt-3 text-sm text-textPlain">
+                  <div>{`${c.mileage} km`}</div>
+                  <div>{c.fuelType}</div>
+                  <div>{c.transmission}</div>
+                  <div>{c.yearOfProduction}</div>
                 </div>
               </div>
-
-              {/* Dodatkowe informacje */}
-              <div className="flex flex-wrap gap-4 mt-3 text-sm text-textPlain">
-                <div className="flex items-center gap-2">
-                  <img
-                    className="w-4 h-4 opacity-70"
-                    src="/images/odometer-svgrepo-com1.svg"
-                    alt="mileage"
-                  />
-                  {`${c.mileage} km`}
-                </div>
-
-                <div className="flex items-center gap-2">
-                  <img
-                    className="w-4 h-4 opacity-70"
-                    src="/images/fuel-dispenser-svgrepo-com1.svg"
-                    alt="fuel"
-                  />
-                  {c.fuelType}
-                </div>
-
-                <div className="flex items-center gap-2">
-                  <img
-                    className="w-4 h-4 opacity-70"
-                    src="/images/transmission-svgrepo-com1.svg"
-                    alt="gearbox"
-                  />
-                  {c.transmission}
-                </div>
-
-                <div className="flex items-center gap-2">
-                  <img
-                    className="w-4 h-4 opacity-70"
-                    src="/images/calendar-lines-svgrepo-com1.svg"
-                    alt="year"
-                  />
-                  {c.yearOfProduction}
-                </div>
-              </div>
-            </div>
             </Link>
           </li>
         ))}
