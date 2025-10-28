@@ -49,9 +49,9 @@ export const CarList: React.FC<Props> = ({
       {/* 🔹 Mobilny przycisk pokazujący filtry */}
       <button
         onClick={() => setShowFilters(!showFilters)}
-        className="md:hidden self-end mb-3 bg-gray-800 text-white px-4 py-2 rounded-lg shadow hover:bg-gray-700 transition-all"
+        className="md:hidden self-end mb-3 bg-primary text-white px-4 py-2 rounded-lg shadow hover:bg-accent transition-all"
       >
-        {showFilters ? "Ukryj filtry ✖️" : "Pokaż filtry ⚙️"}
+        {showFilters ? "Ukryj filtry" : "Pokaż filtry"}
       </button>
 
       {/* 🔹 Panel boczny */}
@@ -60,15 +60,14 @@ export const CarList: React.FC<Props> = ({
           bg-surface border border-gray-700 rounded-xl p-6 shadow-xl 
           transition-all duration-300
           md:sticky md:top-4 md:h-fit
-          w-full md:w-[380px] lg:w-[420px] 2xl:w-[460px]
+          w-full md:w-[300px] lg:w-[340px] 2xl:w-[380px]
           ${showFilters ? "block" : "hidden md:block"}
         `}
       >
         <h2 className="text-xl font-semibold text-textMain mb-6">Filtry</h2>
 
         <div className="flex flex-col gap-6">
-          {/* 🔹 Sekcja: Podstawowe dane */}
-          <div>
+          {/* Podstawowe dane */}
             <div className="grid grid-cols-1 gap-4">
               {/* Marka */}
               <input
@@ -92,10 +91,8 @@ export const CarList: React.FC<Props> = ({
                 className="border border-gray-300 rounded-md px-3 py-2 text-sm w-full focus:ring-2 focus:ring-blue-500 focus:outline-none"
               />
             </div>
-          </div>
 
-          {/* 🔹 Sekcja: Parametry */}
-          <div>
+          {/* Parametry */}
             <div className="grid grid-cols-1 gap-4">
               {/* Cena */}
               <div className="flex flex-col gap-3">
@@ -195,7 +192,22 @@ export const CarList: React.FC<Props> = ({
               </select>
             </div>
           </div>
-        </div>
+        {/* 🔹 Przycisk czyszczenia filtrów */}
+    <button
+      onClick={() => {
+        setBrandSearch("");
+        setModelSearch("");
+        setPriceFrom("");
+        setPriceTo("");
+        setYearFrom("");
+        setYearTo("");
+        setFuelType("");
+        setBodyType("");
+      }}
+      className="mt-6 w-full bg-primary text-white py-2 rounded-md hover:bg-accent transition-colors duration-200 shadow-md"
+        >
+        Wyczyść filtry
+    </button>
       </aside>
 
       {/* 🔹 Lista samochodów */}
@@ -205,8 +217,8 @@ export const CarList: React.FC<Props> = ({
             <Link
               to={`/list/${c.id}`}
               className="w-full flex flex-col sm:flex-row gap-6 
-                 bg-surface p-4 rounded-xl border border-gray-700 
-                 shadow-xl hover:shadow-2xl hover:-translate-y-1 
+                 bg-surface p-4 rounded-xl  
+                 shadow-md hover:shadow-lg hover: 
                  transition-all duration-300"
             >
               <img

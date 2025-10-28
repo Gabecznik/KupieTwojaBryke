@@ -6,9 +6,9 @@ export default {
   theme: {
     colors: {
       ...colors,
-      background: "#9c9ba9ff",
+      background: "#ffffffff",
       navigation: "#ffffffff",
-      surface: "#e9e9e9ff",
+      surface: "#ffffffff",
       primary: "#376fc8ff",
       accent: "#facc15",
       orangeAccent: "#f5610bff",

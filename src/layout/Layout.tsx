@@ -38,7 +38,7 @@ export function Layout() {
                 `px-3 py-2 rounded-md transition-all duration-200 ${
                   isActive
                     ? "bg-primary text-white"
-                    : "text-textMuted hover:text-accent hover:bg-gray-800/60"
+                    : "text-textMuted hover: hover:bg-accent"
                 }`
               }
             >
@@ -51,7 +51,7 @@ export function Layout() {
                 `px-3 py-2 rounded-md transition-all duration-200 ${
                   isActive
                     ? "bg-primary text-white"
-                    : "text-textMuted hover:text-accent hover:bg-gray-800/60"
+                    : "text-textMuted hover: hover:bg-accent"
                 }`
               }
             >
