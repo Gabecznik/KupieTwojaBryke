@@ -4,10 +4,10 @@ import { Link } from "react-router-dom";
 
 type Props = {
   cars: Car[];
-  searchValue: string;
-  setSearchValue: (value: string) => void;
-  filterField: string;
-  setFilterField: (value: string) => void;
+  brandSearch: string;
+  setBrandSearch: (value: string) => void;
+  modelSearch: string;
+  setModelSearch: (value: string) => void;
   priceFrom: string;
   setPriceFrom: (value: string) => void;
   priceTo: string;
@@ -16,14 +16,18 @@ type Props = {
   setYearFrom: (value: string) => void;
   yearTo: string;
   setYearTo: (value: string) => void;
+  fuelType: string;
+  setFuelType: (value: string) => void;
+  bodyType: string;
+  setBodyType: (value: string) => void;
 };
 
 export const CarList: React.FC<Props> = ({
   cars,
-  searchValue,
-  setSearchValue,
-  filterField,
-  setFilterField,
+  brandSearch,
+  setBrandSearch,
+  modelSearch,
+  setModelSearch,
   priceFrom,
   setPriceFrom,
   priceTo,
@@ -32,6 +36,10 @@ export const CarList: React.FC<Props> = ({
   setYearFrom,
   yearTo,
   setYearTo,
+  fuelType,
+  setFuelType,
+  bodyType,
+  setBodyType,
 }) => {
   const [showFilters, setShowFilters] = useState(false);
 
@@ -66,10 +74,9 @@ export const CarList: React.FC<Props> = ({
               <input
                 type="text"
                 placeholder="Marka"
-                value={filterField === "brand" ? searchValue : ""}
+                value={brandSearch}
                 onChange={(e) => {
-                  setFilterField("brand");
-                  setSearchValue(e.target.value);
+                  setBrandSearch(e.target.value)
                 }}
                 className="border border-gray-300 rounded-md px-3 py-2 text-sm w-full focus:ring-2 focus:ring-blue-500 focus:outline-none"
               />
@@ -78,10 +85,9 @@ export const CarList: React.FC<Props> = ({
               <input
                 type="text"
                 placeholder="Model"
-                value={filterField === "model" ? searchValue : ""}
+                value={modelSearch}
                 onChange={(e) => {
-                  setFilterField("model");
-                  setSearchValue(e.target.value);
+                  setModelSearch(e.target.value)
                 }}
                 className="border border-gray-300 rounded-md px-3 py-2 text-sm w-full focus:ring-2 focus:ring-blue-500 focus:outline-none"
               />
@@ -154,10 +160,9 @@ export const CarList: React.FC<Props> = ({
 
               {/* Paliwo */}
               <select
-                value={filterField === "fuelType" ? searchValue : ""}
+                value={fuelType}
                 onChange={(e) => {
-                  setFilterField("fuelType");
-                  setSearchValue(e.target.value);
+                  setFuelType(e.target.value)
                 }}
                 className="border border-gray-300 rounded-md px-3 py-2 text-sm w-full bg-white text-gray-700 focus:ring-2 focus:ring-blue-500 focus:outline-none"
               >
@@ -172,10 +177,9 @@ export const CarList: React.FC<Props> = ({
 
               {/* Nadwozie */}
               <select
-                value={filterField === "bodyType" ? searchValue : ""}
+                value={bodyType}
                 onChange={(e) => {
-                  setFilterField("bodyType");
-                  setSearchValue(e.target.value);
+                  setBodyType(e.target.value)
                 }}
                 className="border border-gray-300 rounded-md px-3 py-2 text-sm w-full bg-white text-gray-700 focus:ring-2 focus:ring-blue-500 focus:outline-none"
               >
