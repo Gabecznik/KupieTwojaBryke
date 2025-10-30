@@ -1,16 +1,32 @@
 import { BrowserRouter, Routes, Route } from "react-router-dom";
-import { useState } from "react";
+import { useEffect, useState } from "react";
 
 import { CarList } from "./components/CarList/CarList";
 import { CarForm } from "./components/CarForm/CarForm";
 import { Home } from "./components/pages/Home";
 import { Layout } from "./layout/Layout";
 import { CarDetails } from "./components/CarDetails/CarDetails";
-import cars from "../public/api/cars.json";
+import type { Car } from "./types/Car";
 
 function App() {
   const [searchValue, setSearchValue] = useState<string>("");
   const [filterField, setFilterField] = useState<string>("brand")
+
+  const [cars, setCars] = useState<Car[]>([]);
+  const [isLoading, setIsLoading] = useState<boolean>(true);
+
+  useEffect(() => {
+    fetch("http://localhost:4000/products")
+      .then((res) => res.json())
+      .then((data) => {
+        setCars(data);
+        setIsLoading(false);
+      })
+      .catch((err) => {
+        console.error("Błąd przy pobieraniu samochodów: ", err);
+        setIsLoading(false);
+      })
+  })
 
   const filteredCars = cars.filter(
     (c) => {
@@ -51,7 +67,6 @@ function App() {
 
   return (
     <BrowserRouter>
-      {/* ✅ Layout otacza wszystkie podstrony */}
       <Routes>
         <Route element={<Layout />}>
           {/* 🔹 Strona główna */}
@@ -67,12 +82,13 @@ function App() {
                 setSearchValue={setSearchValue}
                 filterField={filterField}
                 setFilterField={setFilterField}
+                isLoading={isLoading}
               />
             }
           />
 
           {/* 🔹 Formularz dodawania samochodu */}
-        <Route path="/list/:id" element={<CarDetails />} />
+        <Route path="/list/:id" element={<CarDetails cars={cars}/>} />
           <Route path="/form" element={<CarForm />} />
         </Route>
       </Routes>
