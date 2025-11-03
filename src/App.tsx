@@ -9,61 +9,53 @@ import { CarDetails } from "./components/CarDetails/CarDetails";
 import type { Car } from "./types/Car";
 
 function App() {
-  const [searchValue, setSearchValue] = useState<string>("");
-  const [filterField, setFilterField] = useState<string>("brand")
-
   const [cars, setCars] = useState<Car[]>([]);
-  const [isLoading, setIsLoading] = useState<boolean>(true);
 
   useEffect(() => {
     fetch("http://localhost:4000/products")
       .then((res) => res.json())
-      .then((data) => {
-        setCars(data);
-        setIsLoading(false);
-      })
-      .catch((err) => {
-        console.error("Błąd przy pobieraniu samochodów: ", err);
-        setIsLoading(false);
-      })
-  })
+      .then(setCars)
+      .catch((err) => console.error("Błąd pobierania danych:", err));
+  }, []);
+  
+  const [brandSearch, setBrandSearch] = useState("");
+  const [modelSearch, setModelSearch] = useState("");
 
-  const filteredCars = cars.filter(
-    (c) => {
-      const val = searchValue.toLocaleLowerCase().trim();
+  const [priceFrom, setPriceFrom] = useState<string>("");
+  const [priceTo, setPriceTo] = useState<string>("");
 
-      if (!val) return true;
+  const [yearFrom, setYearFrom] = useState<string>("");
+  const [yearTo, setYearTo] = useState<string>("");
 
-      switch (filterField) {
-        case "model":
-          return c.model.toLowerCase().includes(val);
-        case "registrationNumber":
-          return c.registrationNumber.toLowerCase().includes(val);
-        case "mileage":
-          return String(c.mileage).includes(val);
-        case "price":
-          return String(c.price).includes(val);
-        case "insuranceValidUntil":
-          return c.insuranceValidUntil.toLowerCase().includes(val);
-        case "inspectionValidUntil":
-          return c.inspectionValidUntil.toLowerCase().includes(val);
-        case "vehicleType":
-          return c.vehicleType.toLowerCase().includes(val);
-        case "yearOfProduction":
-          return String(c.yearOfProduction).includes(val);
-        case "engineCapacity":
-          return c.engineCapacity.toString().includes(val);
-        case "fuelType":
-          return c.fuelType.toLowerCase().includes(val);
-        case "bodyType":
-          return c.bodyType.toLowerCase().includes(val);
-        case "transmission":
-          return c.transmission.toLowerCase().includes(val);
-        default:
-          return c.brand.toLowerCase().includes(val);
-      }
-    }
-   );
+  const [fuelType, setFuelType] = useState("");
+  const [bodyType, setBodyType] = useState("");
+
+
+  const filteredCars = cars.filter((c) => {
+  const brandOk =
+    !brandSearch || c.brand.toLowerCase().includes(brandSearch.toLowerCase());
+
+  const modelOk =
+    !modelSearch || c.model.toLowerCase().includes(modelSearch.toLowerCase());
+
+  const priceOk =
+    (!priceFrom || c.price >= Number(priceFrom)) &&
+    (!priceTo || c.price <= Number(priceTo));
+
+  const yearOk =
+    (!yearFrom || c.yearOfProduction >= Number(yearFrom)) &&
+    (!yearTo || c.yearOfProduction <= Number(yearTo));
+
+  const fuelOk =
+    !fuelType || c.fuelType.toLowerCase() === fuelType.toLowerCase();
+
+  const bodyOk =
+    !bodyType || c.bodyType.toLowerCase() === bodyType.toLowerCase();
+
+  return brandOk && modelOk && priceOk && yearOk && fuelOk && bodyOk;
+});
+
+
 
   return (
     <BrowserRouter>
@@ -77,12 +69,23 @@ function App() {
             path="/list"
             element={
               <CarList
-                cars={filteredCars}
-                searchValue={searchValue}
-                setSearchValue={setSearchValue}
-                filterField={filterField}
-                setFilterField={setFilterField}
-                isLoading={isLoading}
+                  cars={filteredCars}
+                  brandSearch={brandSearch}
+                  setBrandSearch={setBrandSearch}
+                  modelSearch={modelSearch}
+                  setModelSearch={setModelSearch}
+                  priceFrom={priceFrom}
+                  setPriceFrom={setPriceFrom}
+                  priceTo={priceTo}
+                  setPriceTo={setPriceTo}
+                  yearFrom={yearFrom}
+                  setYearFrom={setYearFrom}
+                  yearTo={yearTo}
+                  setYearTo={setYearTo}
+                  fuelType={fuelType}
+                  setFuelType={setFuelType}
+                  bodyType={bodyType}
+                  setBodyType={setBodyType}
               />
             }
           />

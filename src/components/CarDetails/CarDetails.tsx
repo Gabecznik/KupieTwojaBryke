@@ -1,6 +1,8 @@
 import { useParams, Link } from "react-router-dom";
 import type { Car } from "../../types/Car";
 import React from "react";
+// import cars from "../../../public/api/cars.json"; 
+// import { CarTasks } from "../CarTasks/CarTasks";
 
 type Props = {
     cars: Car[];
@@ -100,4 +102,4 @@ export const CarDetails: React.FC<Props> = ({ cars }) => {
           </div>
       </div>
     );
-}
+  }
