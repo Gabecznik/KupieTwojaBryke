@@ -34,3 +34,10 @@ model Car {
 
   @@map("cars")
 }
+
+model User {
+  id       Int     @id @default(autoincrement())
+  username String  @unique
+  password String
+}
+
