@@ -1,7 +1,7 @@
 import React, { useState } from "react";
 import type { Car } from "../../types/Car";
 import { Link } from "react-router-dom";
-import { Loader } from "../Loader/Loader";
+// import { Loader } from "../Loader/Loader";
 
 type Props = {
   cars: Car[];
