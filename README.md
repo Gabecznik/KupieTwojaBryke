@@ -1,3 +1,20 @@
+# KupieTwojaBryke – lokalne uruchomienie
+
+## Backend
+1. cd server
+2. npm i
+3. npx prisma db push
+4. npm run dev
+
+## Frontend
+1. cd ..
+2. npm i
+3. npm run dev
+
+Adresy:
+- Backend: http://localhost:4000
+- Frontend: http://localhost:5173
+
 # React + TypeScript + Vite
 
 This template provides a minimal setup to get React working in Vite with HMR and some ESLint rules.
