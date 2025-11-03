@@ -58,14 +58,14 @@ export const CarList: React.FC<Props> = ({
       {/* 🔹 Panel boczny */}
       <aside
         className={`
-          bg-surface border border-gray-700 rounded-xl p-6 shadow-xl 
+          bg-surface rounded-xl p-6 shadow-xl 
           transition-all duration-300
           md:sticky md:top-4 md:h-fit
           w-full md:w-[300px] lg:w-[340px] 2xl:w-[380px]
           ${showFilters ? "block" : "hidden md:block"}
         `}
       >
-        <h2 className="text-xl font-semibold text-textMain mb-6">Filtry</h2>
+        {/* <h2 className="text-xl font-semibold text-textMain mb-6">Filtry</h2> */}
 
         <div className="flex flex-col gap-6">
           {/* Podstawowe dane */}
