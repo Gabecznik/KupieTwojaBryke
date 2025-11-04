@@ -58,7 +58,7 @@ function App() {
 
 
   return (
-    <BrowserRouter>
+    <BrowserRouter basename="/KupieTwojaBryke">
       <Routes>
         <Route element={<Layout />}>
           {/* 🔹 Strona główna */}
