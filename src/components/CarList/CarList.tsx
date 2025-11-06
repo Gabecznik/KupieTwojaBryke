@@ -1,6 +1,7 @@
-import React, { useState } from "react";
+import React, { useEffect, useState } from "react";
 import type { Car } from "../../types/Car";
 import { Link } from "react-router-dom";
+import { ProductAPI } from "../../api/products";
 // import { Loader } from "../Loader/Loader";
 
 type Props = {
@@ -21,6 +22,7 @@ type Props = {
   setFuelType: (value: string) => void;
   bodyType: string;
   setBodyType: (value: string) => void;
+  setCars: (value: Car[]) => void;
 };
 
 export const CarList: React.FC<Props> = ({
@@ -41,9 +43,18 @@ export const CarList: React.FC<Props> = ({
   setFuelType,
   bodyType,
   setBodyType,
+  setCars,
 }) => {
   const [showFilters, setShowFilters] = useState(false);
 
+  useEffect(() => {
+    const token = localStorage.getItem("token");
+    if (!token) return;
+
+    ProductAPI.getAll()
+      .then(setCars)
+      .catch((err) => console.error("Błąd pobierania danych:", err));
+  }, [setCars]);
 
   return (
     <div className="flex flex-col md:flex-row gap-6 w-full relative">
@@ -69,35 +80,34 @@ export const CarList: React.FC<Props> = ({
 
         <div className="flex flex-col gap-6">
           {/* Podstawowe dane */}
-            <div className="grid grid-cols-1 gap-4">
-              {/* Marka */}
-              <input
-                type="text"
-                placeholder="Marka"
-                value={brandSearch}
-                onChange={(e) => {
-                  setBrandSearch(e.target.value)
-                }}
-                className="border border-gray-300 rounded-md px-3 py-2 text-sm w-full focus:ring-2 focus:ring-blue-500 focus:outline-none"
-              />
+          <div className="grid grid-cols-1 gap-4">
+            {/* Marka */}
+            <input
+              type="text"
+              placeholder="Marka"
+              value={brandSearch}
+              onChange={(e) => {
+                setBrandSearch(e.target.value);
+              }}
+              className="border border-gray-300 rounded-md px-3 py-2 text-sm w-full focus:ring-2 focus:ring-blue-500 focus:outline-none"
+            />
 
-              {/* Model */}
-              <input
-                type="text"
-                placeholder="Model"
-                value={modelSearch}
-                onChange={(e) => {
-                  setModelSearch(e.target.value)
-                }}
-                className="border border-gray-300 rounded-md px-3 py-2 text-sm w-full focus:ring-2 focus:ring-blue-500 focus:outline-none"
-              />
-            </div>
+            {/* Model */}
+            <input
+              type="text"
+              placeholder="Model"
+              value={modelSearch}
+              onChange={(e) => {
+                setModelSearch(e.target.value);
+              }}
+              className="border border-gray-300 rounded-md px-3 py-2 text-sm w-full focus:ring-2 focus:ring-blue-500 focus:outline-none"
+            />
+          </div>
 
           {/* Parametry */}
-            <div className="grid grid-cols-1 gap-4">
-              {/* Cena */}
-              <div className="flex flex-col gap-3">
-
+          <div className="grid grid-cols-1 gap-4">
+            {/* Cena */}
+            <div className="flex flex-col gap-3">
               <div className="grid grid-cols-2 gap-3">
                 {/* Cena od */}
                 <input
@@ -127,88 +137,88 @@ export const CarList: React.FC<Props> = ({
               </div>
             </div>
 
-              {/* Rok */}
-              <div className="flex flex-col gap-3">
-                  <div className="grid grid-cols-2 gap-3">
-                  <input
-                    type="text"
-                    inputMode="numeric"
-                    placeholder="Rok od"
-                    value={yearFrom}
-                    onChange={(e) => {
-                      const value = e.target.value.replace(/\D/g, "");
-                      setYearFrom(value);
-                    }}
-                    className="border border-gray-300 rounded-md px-3 py-2 text-sm w-full focus:ring-2 focus:ring-blue-500 focus:outline-none"
-                  />
+            {/* Rok */}
+            <div className="flex flex-col gap-3">
+              <div className="grid grid-cols-2 gap-3">
+                <input
+                  type="text"
+                  inputMode="numeric"
+                  placeholder="Rok od"
+                  value={yearFrom}
+                  onChange={(e) => {
+                    const value = e.target.value.replace(/\D/g, "");
+                    setYearFrom(value);
+                  }}
+                  className="border border-gray-300 rounded-md px-3 py-2 text-sm w-full focus:ring-2 focus:ring-blue-500 focus:outline-none"
+                />
 
-                  <input
-                    type="text"
-                    inputMode="numeric"
-                    placeholder="Rok do"
-                    value={yearTo}
-                    onChange={(e) => {
-                      const value = e.target.value.replace(/\D/g, "");
-                      setYearTo(value);
-                    }}
-                    className="border border-gray-300 rounded-md px-3 py-2 text-sm w-full focus:ring-2 focus:ring-blue-500 focus:outline-none"
-                  />
-                </div>
+                <input
+                  type="text"
+                  inputMode="numeric"
+                  placeholder="Rok do"
+                  value={yearTo}
+                  onChange={(e) => {
+                    const value = e.target.value.replace(/\D/g, "");
+                    setYearTo(value);
+                  }}
+                  className="border border-gray-300 rounded-md px-3 py-2 text-sm w-full focus:ring-2 focus:ring-blue-500 focus:outline-none"
+                />
               </div>
-
-              {/* Paliwo */}
-              <select
-                value={fuelType}
-                onChange={(e) => {
-                  setFuelType(e.target.value)
-                }}
-                className="border border-gray-300 rounded-md px-3 py-2 text-sm w-full bg-white text-gray-700 focus:ring-2 focus:ring-blue-500 focus:outline-none"
-              >
-                <option value="" disabled selected hidden>
-                  Rodzaj paliwa...
-                </option>
-                <option value="Benzyna">Benzyna</option>
-                <option value="Diesel">Diesel</option>
-                <option value="Hybryda">Hybryda</option>
-                <option value="Elektryczny">Elektryczny</option>
-              </select>
-
-              {/* Nadwozie */}
-              <select
-                value={bodyType}
-                onChange={(e) => {
-                  setBodyType(e.target.value)
-                }}
-                className="border border-gray-300 rounded-md px-3 py-2 text-sm w-full bg-white text-gray-700 focus:ring-2 focus:ring-blue-500 focus:outline-none"
-              >
-                <option value="" disabled selected hidden>
-                  Typ nadwozia...
-                </option>
-                <option value="Sedan">Sedan</option>
-                <option value="Kombi">Kombi</option>
-                <option value="SUV">SUV</option>
-                <option value="Hatchback">Hatchback</option>
-                <option value="Coupe">Coupe</option>
-                <option value="Van">Van</option>
-              </select>
             </div>
+
+            {/* Paliwo */}
+            <select
+              value={fuelType}
+              onChange={(e) => {
+                setFuelType(e.target.value);
+              }}
+              className="border border-gray-300 rounded-md px-3 py-2 text-sm w-full bg-white text-gray-700 focus:ring-2 focus:ring-blue-500 focus:outline-none"
+            >
+              <option value="" disabled selected hidden>
+                Rodzaj paliwa...
+              </option>
+              <option value="Benzyna">Benzyna</option>
+              <option value="Diesel">Diesel</option>
+              <option value="Hybryda">Hybryda</option>
+              <option value="Elektryczny">Elektryczny</option>
+            </select>
+
+            {/* Nadwozie */}
+            <select
+              value={bodyType}
+              onChange={(e) => {
+                setBodyType(e.target.value);
+              }}
+              className="border border-gray-300 rounded-md px-3 py-2 text-sm w-full bg-white text-gray-700 focus:ring-2 focus:ring-blue-500 focus:outline-none"
+            >
+              <option value="" disabled selected hidden>
+                Typ nadwozia...
+              </option>
+              <option value="Sedan">Sedan</option>
+              <option value="Kombi">Kombi</option>
+              <option value="SUV">SUV</option>
+              <option value="Hatchback">Hatchback</option>
+              <option value="Coupe">Coupe</option>
+              <option value="Van">Van</option>
+            </select>
           </div>
+        </div>
         {/* 🔹 Przycisk czyszczenia filtrów */}
-    <button
-      onClick={() => {
-        setBrandSearch("");
-        setModelSearch("");
-        setPriceFrom("");
-        setPriceTo("");
-        setYearFrom("");
-        setYearTo("");
-        setFuelType("");
-        setBodyType("");
-      }}
-      className="mt-6 w-full bg-primary text-white py-2 rounded-md hover:bg-accent transition-colors duration-200 shadow-md"
+        <button
+          onClick={() => {
+            setBrandSearch("");
+            setModelSearch("");
+            setPriceFrom("");
+            setPriceTo("");
+            setYearFrom("");
+            setYearTo("");
+            setFuelType("");
+            setBodyType("");
+          }}
+          className="mt-6 w-full bg-primary text-white py-2 rounded-md hover:bg-accent transition-colors duration-200 shadow-md"
         >
-        Wyczyść filtry
-    </button>
+          Wyczyść filtry
+        </button>
       </aside>
 
       {/* 🔹 Lista samochodów */}
