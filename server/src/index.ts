@@ -5,6 +5,7 @@ import jwt from "jsonwebtoken";
 import bcrypt from "bcrypt";
 import dotenv from "dotenv";
 import { Request, Response, NextFunction } from "express";
+import { JwtPayload } from "jsonwebtoken";
 
 dotenv.config();
 
@@ -23,11 +24,11 @@ function authenticateToken(req: Request, res: Response, next: NextFunction) {
 
   if (!token) return res.sendStatus(401);
 
-  jwt.verify(token, SECRET, (err, user) => {
-    if (err) return res.sendStatus(403); // nieważny token
-    (req as any).user = user;
-    next();
-  });
+  jwt.verify(token, SECRET, (err, decoded) => {
+  if (err) return res.sendStatus(403);
+  req.user = decoded as JwtPayload & { id: number; username: string };
+  next();
+});
 }
 
 

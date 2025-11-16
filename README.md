@@ -1,5 +1,7 @@
 # KupieTwojaBryke – lokalne uruchomienie
 
+npx prisma migrate dev --name init
+
 ## Backend
 1. cd server
 2. npm i
