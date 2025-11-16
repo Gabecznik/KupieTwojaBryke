@@ -11,7 +11,11 @@ dotenv.config();
 const app = express();
 const prisma = new PrismaClient();
 
-app.use(cors());
+app.use(cors({
+  origin: "*",
+  allowedHeaders: ["Content-Type", "Authorization"]
+}));
+
 app.use(express.json());
 
 const SECRET = process.env.JWT_SECRET as string;
@@ -25,6 +29,7 @@ function authenticateToken(req: Request, res: Response, next: NextFunction) {
 
   jwt.verify(token, SECRET, (err, user) => {
     if (err) return res.sendStatus(403); // nieważny token
+    // eslint-disable-next-line @typescript-eslint/no-explicit-any
     (req as any).user = user;
     next();
   });
