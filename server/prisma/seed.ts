@@ -1,4 +1,4 @@
-import { PrismaClient } from "../generated/prisma/index.js";
+import { PrismaClient } from "@prisma/client";
 import bcrypt from "bcrypt";
 
 const prisma = new PrismaClient();
@@ -7,7 +7,7 @@ async function main() {
   const adminUsername = "admin";
   const adminPassword = "admin";
 
-  // sprawdź, czy użytkownik już istnieje
+
   const existing = await prisma.user.findUnique({
     where: { username: adminUsername },
   });
