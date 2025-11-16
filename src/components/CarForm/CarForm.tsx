@@ -52,7 +52,7 @@ export function CarForm() {
 
       const token = localStorage.getItem("token");
   
-      const response = await fetch("https://kupie-twoja-bryke-backend.onrender.com/products", {
+      const response = await fetch("https://kupietwojabryke.onrender.com/products", {
         method: "POST",
         headers: { 
           "Content-Type": "application/json",
