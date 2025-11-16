@@ -1,4 +1,4 @@
-const API_URL = "http://localhost:4000";
+const API_URL = "https://kupietwojabryke.onrender.com";
 
 // Pomocnicza funkcja do pobierania tokena
 function getAuthHeader(): Record<string, string> {
