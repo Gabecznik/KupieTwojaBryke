@@ -49,10 +49,15 @@ export function CarForm() {
       };
   
       console.log("Body do wysłania:", body);
+
+      const token = localStorage.getItem("token");
   
-      const response = await fetch("http://localhost:4000/products", {
+      const response = await fetch("https://kupie-twoja-bryke-backend.onrender.com/products", {
         method: "POST",
-        headers: { "Content-Type": "application/json" },
+        headers: { 
+          "Content-Type": "application/json",
+          "Authorization": `Bearer ${token}`, 
+        },
         body: JSON.stringify(body),
       });
   
