@@ -120,18 +120,28 @@ export function CarForm() {
           <div>
             <label className="block mb-1 text-sm text-textMuted">Numer rejestracyjny</label>
             <input
-              {...register("registrationNumber")}
+              {...register("registrationNumber", { required: true})}
               className="w-full px-3 py-2 rounded-md bg-white border border-gray-600 focus:border-primary focus:ring-2 focus:ring-primary focus:outline-none"
             />
+            {errors.registrationNumber && (
+              <p className="text-accent text-sm mt-1">
+                Nr rejestracyjny jest wymagany
+              </p>
+            )}
           </div>
 
           {/* VIN */}
           <div>
             <label className="block mb-1 text-sm text-textMuted">Numer VIN</label>
             <input
-              {...register("vin")}
+              {...register("vin", { required: true})}
               className="w-full px-3 py-2 rounded-md bg-white border border-gray-600 focus:border-primary focus:ring-2 focus:ring-primary focus:outline-none"
             />
+            {errors.vin && (
+              <p className="text-accent text-sm mt-1">
+                Nr VIN jest wymagany
+              </p>
+            )}
           </div>
 
           {/* Cena */}
@@ -167,10 +177,23 @@ export function CarForm() {
           {/* Rodzaj pojazdu */}
           <div>
             <label className="block mb-1 text-sm text-textMuted">Rodzaj pojazdu</label>
-            <input
-              {...register("vehicleType")}
+            <select
+              {...register("vehicleType", { required: true })}
               className="w-full px-3 py-2 rounded-md bg-white border border-gray-600 focus:border-primary focus:ring-2 focus:ring-primary focus:outline-none"
-            />
+            >
+              <option value="">-- Wybierz rodzaj pojazdu --</option>
+              <option value="osobowy">Osobowy</option>
+              <option value="dostawczy">Dostawczy</option>
+              <option value="ciężarowy">Ciężarowy</option>
+              <option value="motocykl">Motocykl</option>
+              <option value="quad">Quad</option>
+              <option value="autobus">Autobus</option>
+              <option value="inne">Inne</option>
+            </select>
+
+            {errors.vehicleType && (
+              <p className="text-accent text-sm mt-1">Wybierz rodzaj pojazdu</p>
+            )}
           </div>
 
           {/* Pojemność silnika */}
@@ -194,10 +217,20 @@ export function CarForm() {
           {/* Rodzaj paliwa */}
           <div>
             <label className="block mb-1 text-sm text-textMuted">Rodzaj paliwa</label>
-            <input
-              {...register("fuelType")}
-              className="w-full px-3 py-2 rounded-md bg-white border border-gray-600 focus:border-primary focus:ring-2 focus:ring-primary focus:outline-none"
-            />
+            <select
+              {...register("fuelType", { required: true })}
+              className="w-full px-3 py-2 rounded-md bg-white border border-gray-600 focus:border-primary focus:ring-2 focus:ring-primary focus:outline-none">
+              <option value="">-- Wybierz rodzaj paliwa --</option>
+              <option value="Benzyna">Benzyna</option>
+              <option value="Benzyna i gaz">Benzyna i gaz</option>
+              <option value="Diesel">Diesel</option>
+              <option value="Hybryda">Hybryda</option>
+              <option value="Elektryczne">Elektryczne</option>
+            </select>
+
+            {errors.fuelType && (
+              <p className="text-accent text-sm mt-1">Wybierz rodzaj paliwa</p>
+            )}
           </div>
 
           {/* Typ nadwozia */}
@@ -243,9 +276,13 @@ export function CarForm() {
             <label className="block mb-1 text-sm text-textMuted">Data pierwszej rejestracji</label>
             <input
               type="date"
-              {...register("firstRegistrationDate")}
+              {...register("firstRegistrationDate", { required: true })}
               className="w-full px-3 py-2 rounded-md bg-white border border-gray-600 focus:border-primary focus:ring-2 focus:ring-primary focus:outline-none"
             />
+
+            {errors.firstRegistrationDate && (
+              <p className="text-accent text-sm mt-1">Podaj datę pierwszej rejestracji</p>
+            )}
           </div>
 
           {/* Ubezpieczenie do */}
@@ -253,9 +290,13 @@ export function CarForm() {
             <label className="block mb-1 text-sm text-textMuted">Koniec ubezpieczenia</label>
             <input
               type="date"
-              {...register("insuranceValidUntil")}
+              {...register("insuranceValidUntil", { required: true })}
               className="w-full px-3 py-2 rounded-md bg-white border border-gray-600 focus:border-primary focus:ring-2 focus:ring-primary focus:outline-none"
             />
+
+            {errors.insuranceValidUntil && (
+              <p className="text-accent text-sm mt-1">Podaj datę końca ubezpieczenia</p>
+            )}
           </div>
 
           {/* Przegląd do */}
@@ -263,9 +304,13 @@ export function CarForm() {
             <label className="block mb-1 text-sm text-textMuted">Koniec przeglądu</label>
             <input
               type="date"
-              {...register("inspectionValidUntil")}
+              {...register("inspectionValidUntil", { required: true })}
               className="w-full px-3 py-2 rounded-md bg-white border border-gray-600 focus:border-primary focus:ring-2 focus:ring-primary focus:outline-none"
             />
+
+            {errors.inspectionValidUntil && (
+              <p className="text-accent text-sm mt-1">Podaj datę końca przeglądu</p>
+            )}
           </div>
 
           {/* Data zakupu */}
@@ -273,9 +318,13 @@ export function CarForm() {
             <label className="block mb-1 text-sm text-textMuted">Data zakupu</label>
             <input
               type="date"
-              {...register("purchaseDate")}
+              {...register("purchaseDate", { required: true })}
               className="w-full px-3 py-2 rounded-md bg-white border border-gray-600 focus:border-primary focus:ring-2 focus:ring-primary focus:outline-none"
             />
+
+            {errors.purchaseDate && (
+              <p className="text-accent text-sm mt-1">Podaj datę zakupu</p>
+            )}
           </div>
         </div>
 
