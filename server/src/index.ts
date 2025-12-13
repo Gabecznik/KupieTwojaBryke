@@ -5,11 +5,14 @@ import jwt from "jsonwebtoken";
 import bcrypt from "bcrypt";
 import dotenv from "dotenv";
 import { Request, Response, NextFunction } from "express";
+import { imagekit } from "./imagekit";
+import multer from "multer";
 
 dotenv.config();
 
 const app = express();
 const prisma = new PrismaClient();
+const upload = multer({ storage: multer.memoryStorage() });
 
 app.use(
   cors({
@@ -100,6 +103,32 @@ app.delete("/products/:id", authenticateToken, async (req, res) => {
   await prisma.car.delete({ where: { id } });
   res.status(204).send();
 });
+
+
+app.post(
+  "/api/upload",
+  upload.single("image"),
+  async (req: Request, res: Response) => {
+    try {
+      const file = req.file as Express.Multer.File | undefined;
+
+      if (!file) {
+        return res.status(400).json({ error: "Brak pliku" });
+      }
+
+      const result = await imagekit.upload({
+        file: file.buffer,
+        fileName: file.originalname,
+        folder: "/cars",
+      });
+
+      return res.json({ url: result.url });
+    } catch (error) {
+      console.error("Błąd uploadu:", error);
+      return res.status(500).json({ error: "upload failed" });
+    }
+  }
+);
 
 const PORT = process.env.PORT || 4000;
 app.listen(PORT, () => console.log(`Server start: http://localhost:${PORT}`));

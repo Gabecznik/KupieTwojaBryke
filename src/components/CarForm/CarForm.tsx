@@ -1,3 +1,4 @@
+import { useState } from "react";
 import { useForm } from "react-hook-form";
 import type { Car } from "../../types/Car";
 
@@ -32,8 +33,45 @@ export function CarForm() {
     },
   });
 
+    const [imageFile, setImageFile] = useState<File | null>(null);
+  const [imagePreview, setImagePreview] = useState<string>("");
+
+  const handleImageChange = (e: React.ChangeEvent<HTMLInputElement>) => {
+    const file = e.target.files?.[0] || null;
+    setImageFile(file);
+
+    if (file) {
+      setImagePreview(URL.createObjectURL(file));
+    } else {
+      setImagePreview("");
+    }
+  };
+
   const onSubmit = async (data: Car) => {
     try {
+      let imageUrl = "";
+
+      // 1. Jeśli wybrano plik, wyślij go najpierw na /api/upload
+      if (imageFile) {
+        const formData = new FormData();
+        formData.append("image", imageFile); // NAZWA "image" = upload.single("image")
+
+        const uploadResponse = await fetch("https://kupietwojabryke.onrender.com/api/upload", {
+          method: "POST",
+          body: formData,
+        });
+
+        if (!uploadResponse.ok) {
+          const text = await uploadResponse.text();
+          console.error("Upload error:", text);
+          throw new Error("Nie udało się wysłać zdjęcia");
+        }
+
+        const uploadData = await uploadResponse.json();
+        imageUrl = uploadData.url; // URL z ImageKit
+      }
+
+      // 2. Przygotuj body dla /products
       const body = {
         ...data,
         mileage: Number(data.mileage),
@@ -45,7 +83,7 @@ export function CarForm() {
         purchaseDate: new Date(data.purchaseDate),
         insuranceValidUntil: new Date(data.insuranceValidUntil),
         inspectionValidUntil: new Date(data.inspectionValidUntil),
-        image: data.image ? String(data.image) : "",
+        image: imageUrl || "", // tutaj trafia URL zdjęcia (albo pusty string)
       };
   
       console.log("Body do wysłania:", body);
@@ -70,6 +108,9 @@ export function CarForm() {
       const newCar = await response.json();
       console.log("Dodano samochód: ", newCar);
       alert("Samochód zapisany");
+      // reset podglądu i pliku
+      setImageFile(null);
+      setImagePreview("");
     } catch (error) {
       console.error(error);
       alert("Wystąpił błąd przy dodawaniu samochodu");
@@ -113,6 +154,29 @@ export function CarForm() {
               <p className="text-accent text-sm mt-1">
                 Model jest wymagany (min. 2 znaki)
               </p>
+            )}
+          </div>
+
+          {/* Zdjęcie pojazdu */}
+          <div>
+            <label className="block mb-1 text-sm text-textMuted">
+              Zdjęcie pojazdu (opcjonalne)
+            </label>
+            <input
+              type="file"
+              accept="image/*"
+              onChange={handleImageChange}
+              className="w-full text-sm text-textMuted file:mr-4 file:py-2 file:px-4 file:rounded-md file:border-0 file:text-sm file:font-semibold file:bg-primary file:text-white hover:file:bg-blue-700"
+            />
+            {imagePreview && (
+              <div className="mt-2">
+                <p className="text-xs text-textMuted mb-1">Podgląd:</p>
+                <img
+                  src={imagePreview}
+                  alt="Podgląd pojazdu"
+                  className="max-h-40 rounded-md border border-gray-600"
+                />
+              </div>
             )}
           </div>
           

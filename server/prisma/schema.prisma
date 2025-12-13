@@ -11,7 +11,7 @@ model Car {
   id                    Int      @id @default(autoincrement())
   brand                 String
   model                 String
-  image                 String
+  image                 String?
   registrationNumber    String   @unique
   vin                   String   @unique
   mileage               Int
