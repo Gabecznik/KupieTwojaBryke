@@ -31,7 +31,7 @@ export const CarDetails: React.FC<Props> = ({ cars }) => {
           {/* Zdjęcie */}
               <img
                   className="w-[600px] h-[300px] object-cover rounded-md shadow-md"
-                  src="/images/car-angled-front-left-svgrepo-com.svg"
+                  src={car.image || ""}
                   alt={`${car.brand} ${car.model}`}
               />
   
