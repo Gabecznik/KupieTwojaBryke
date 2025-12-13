@@ -1,8 +1,7 @@
-import { useParams, Link } from "react-router-dom";
+import { useParams, Link, useNavigate } from "react-router-dom";
 import type { Car } from "../../types/Car";
 import React from "react";
-// import cars from "../../../public/api/cars.json"; 
-// import { CarTasks } from "../CarTasks/CarTasks";
+import { ProductAPI } from "../../api/products";
 
 type Props = {
     cars: Car[];
@@ -11,6 +10,23 @@ type Props = {
 export const CarDetails: React.FC<Props> = ({ cars }) => {
     const { id } = useParams<{ id: string }>();
     const car = cars.find((c) => String(c.id) === id);
+    const navigate = useNavigate();
+
+    const handleDelete = async () => {
+    if (!car) return;
+
+    const confirmDelete = window.confirm("Czy na pewno chcesz usunąć ten pojazd?");
+    if (!confirmDelete) return;
+
+    try {
+        await ProductAPI.delete(car.id);
+        alert("Pojazd został usunięty");
+        navigate("/list");
+    } catch (error) {
+        console.error(error);
+        alert("Nie udało się usunąć pojazdu");
+    }
+    };
   
     if (!car) {
       return (
@@ -31,7 +47,7 @@ export const CarDetails: React.FC<Props> = ({ cars }) => {
           {/* Zdjęcie */}
               <img
                   className="w-[600px] h-[300px] object-cover rounded-md shadow-md"
-                  src={car.image || ""}
+                  src={car.image || "https://ik.imagekit.io/martaosikiewicz/cars/NoImage.webp"}
                   alt={`${car.brand} ${car.model}`}
               />
   
@@ -85,12 +101,12 @@ export const CarDetails: React.FC<Props> = ({ cars }) => {
                       before:bg-accent"
                   >
                   <h2 className="text-lg font-semibold mb-2">Uwagi</h2>
-                  <p className="whitespace-pre-line leading-relaxed">{car.notes}</p>
+                  <p className="whitespace-pre-line leading-relaxed">{car.notes?.trim() ? car.notes : "Brak uwag"}</p>
                   </div>
                   )}
                                   
   
-              <div className="mt-4 flex justify-center">
+              {/* <div className="mt-4 flex justify-center">
                   <Link to="/list"
                       className="mt-4 w-full md:w-auto text-center bg-primary hover:bg-blue-700 
                           text-white font-semibold py-2 px-6 rounded-md 
@@ -98,8 +114,28 @@ export const CarDetails: React.FC<Props> = ({ cars }) => {
                           >
                       Wróć do listy
                   </Link>
-              </div>
+              </div> */}
           </div>
+          <div className="mt-6 flex gap-4 justify-center">
+        <button
+            onClick={handleDelete}
+            className="bg-red-600 hover:bg-red-700 
+            text-white font-semibold py-2 px-6 rounded-md 
+            transition-colors duration-300 shadow-md"
+        >
+            Usuń pojazd
+        </button>
+
+        <Link
+            to="/list"
+            className="bg-primary hover:bg-blue-700 
+            text-white font-semibold py-2 px-6 rounded-md 
+            transition-colors duration-300 shadow-md"
+        >
+            Wróć do listy
+        </Link>
+        </div>
+
       </div>
     );
   }

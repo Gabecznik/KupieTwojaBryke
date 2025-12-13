@@ -234,7 +234,7 @@ export const CarList: React.FC<Props> = ({
             >
               <img
                 className="w-full sm:w-40 h-40 sm:h-28 object-cover rounded-md"
-                src={c.image?.trim() ? c.image : "/images/car-angled-front-left-svgrepo-com.svg"}
+                src={c.image?.trim() ? c.image : "https://ik.imagekit.io/martaosikiewicz/cars/NoImage.webp"}
                 alt={`${c.brand} ${c.model}`}
               />
 
